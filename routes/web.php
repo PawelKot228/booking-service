@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomePage;
+use App\Http\Controllers\ServicesPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomePage::class)->name('home');
+Route::get('/', ServicesPage::class)->name('services');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
 });
