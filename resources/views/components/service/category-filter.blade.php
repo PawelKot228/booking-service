@@ -1,6 +1,6 @@
-<div class="flex items-center justify-center p-4">
+<div>
 
-    <x-button id="dropdownDefault" data-dropdown-toggle="dropdown">
+    <x-button id="dropdownDefault" data-dropdown-toggle="dropdown" class="w-full">
         <span>
             {{ __('Choose categories') }}
         </span>
@@ -14,9 +14,7 @@
 
     <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
         @foreach(\App\Enums\ServiceCategory::cases() as $category)
-            <div id="filter_{{$category->value}}"
-                 x-data="selectCategoriesFilter('{{ $category->value }}')"
-            >
+            <div id="filter_{{$category->value}}" x-data="selectCategoriesFilter('{{ $category->value }}')">
                 <h6 class="flex mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     <input id="{{ $category->value }}" type="checkbox" value=""
                            x-model="selected"

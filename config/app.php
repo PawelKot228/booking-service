@@ -58,6 +58,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'google_maps_key' => env('VITE_GOOGLE_MAPS_KEY', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
