@@ -29,7 +29,7 @@
                     fetch("{{ route('api.companies.list') }}")
                         .then(res => res.json())
                         .then(data => {
-                            this.companies = data
+                            this.companies = data.data
                             this.isLoading = false;
                         })
                 }
