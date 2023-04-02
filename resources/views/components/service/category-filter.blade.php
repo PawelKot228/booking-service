@@ -15,8 +15,7 @@
     <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
         @foreach(\App\Enums\ServiceCategory::cases() as $category)
             <div id="filter_{{$category->value}}"
-                 x-data="selectCategoriesFilter()"
-                 x-init="checkboxes = updateCheckboxNames('filter_{{$category->value}}')"
+                 x-data="selectCategoriesFilter('{{ $category->value }}')"
             >
                 <h6 class="flex mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     <input id="{{ $category->value }}" type="checkbox" value=""
@@ -77,7 +76,9 @@
 
 @push('js')
     <script>
-        function selectCategoriesFilter() {
+        const selectedCategory = "{{ request('categoryName') }}";
+
+        function selectCategoriesFilter(category) {
             return {
                 open: false,
                 selected: false,
@@ -103,19 +104,18 @@
                         });
 
                     this.selected = allSelected;
+                },
+                init() {
+                    const check = selectedCategory === category;
+                    const filterCategoryId = `filter_${category}`;
+
+                    this.selected = check;
+                    document.querySelectorAll(`#${filterCategoryId} input[data-type='categorySubFilter']`)
+                        .forEach(el => {
+                            this.checkboxes[el.dataset.name] = check
+                        })
                 }
             }
-        }
-
-        function updateCheckboxNames(filterCategoryId) {
-            let checkboxes = {};
-
-            document.querySelectorAll(`#${filterCategoryId} input[data-type='categorySubFilter']`)
-                .forEach(el => {
-                    checkboxes[el.dataset.name] = el.checked
-                })
-
-            return checkboxes;
         }
     </script>
 @endpush
