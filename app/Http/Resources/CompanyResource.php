@@ -8,13 +8,28 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /** @mixin \App\Models\Company */
 class CompanyResource extends JsonResource
 {
-    public function toArray(Request $request)
+    public function toArray(Request $request): array
     {
+        $categories = [];
+        $subcategories = [];
+
+        if ($this->whenLoaded('categories')) {
+            foreach ($this->categories as $category) {
+                $categories[] = __($category->category);
+                $subcategories[] = __($category->subcategory);
+            }
+        }
+
         return [
             'id' => $this->id,
             'url' => route('companies.show', ['company' => $this->id]),
             'name' => $this->name,
+            'tags' => [
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+            ],
             'description' => $this->description,
+            'appointments_avg_rating' => $this->appointments_avg_rating ?? null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 

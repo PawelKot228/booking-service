@@ -19,15 +19,33 @@
 
                 <div>
                     <a :href="company.url">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                        <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
                             x-text="company.name"
                         >
                         </h5>
                     </a>
+                    {{--                    <span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Pink</span>--}}
+                    <p>
+                        <template x-for="category in company.tags.categories">
+                            <span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300"
+                                  x-text="category"
+                            >
+                            </span>
+                        </template>
+                    </p>
+                    <p class="mb-2">
+                        <template x-for="subcategory in company.tags.subcategories">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300"
+                                  x-text="subcategory"
+                            >
+                            </span>
+                        </template>
+                    </p>
+
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"
                        x-text="company.description"
                     >
-                    </p>
+
                     <a :href="company.url"
                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Read more
