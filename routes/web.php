@@ -23,9 +23,8 @@ Route::prefix('services')
     ->name('services.')
     ->group(function () {
         Route::get('/', ServicesPage::class)->name('index');
-        Route::get('/category/{categoryName}', ServicesCategoryPage::class)->name('category');
+        //Route::get('/category/{categoryName}', ServicesCategoryPage::class)->name('category');
         Route::get('/search', ServicesSearchPage::class)->name('search');
-
     });
 
 Route::middleware([
