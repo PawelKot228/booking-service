@@ -75,45 +75,47 @@
     </div>
 </div>
 
-<script>
-    function selectCategoriesFilter() {
-        return {
-            open: false,
-            selected: false,
-            checkboxes: {},
-            checkAll() {
-                Object.keys(this.checkboxes)
-                    .forEach(name => {
-                        this.checkboxes[name] = !this.selected;
-                    });
+@push('js')
+    <script>
+        function selectCategoriesFilter() {
+            return {
+                open: false,
+                selected: false,
+                checkboxes: {},
+                checkAll() {
+                    Object.keys(this.checkboxes)
+                        .forEach(name => {
+                            this.checkboxes[name] = !this.selected;
+                        });
 
-                this.selected = !this.selected;
-            },
-            unselectSubcategory(checkboxName) {
-                const checkbox = document.querySelector(`input[data-name='${checkboxName}']`);
-                this.checkboxes[checkboxName] = checkbox.checked;
+                    this.selected = !this.selected;
+                },
+                unselectSubcategory(checkboxName) {
+                    const checkbox = document.querySelector(`input[data-name='${checkboxName}']`);
+                    this.checkboxes[checkboxName] = checkbox.checked;
 
-                let allSelected = true;
-                Object.values(this.checkboxes)
-                    .forEach(checked => {
-                        if (!checked) {
-                            allSelected = false;
-                        }
-                    });
+                    let allSelected = true;
+                    Object.values(this.checkboxes)
+                        .forEach(checked => {
+                            if (!checked) {
+                                allSelected = false;
+                            }
+                        });
 
-                this.selected = allSelected;
+                    this.selected = allSelected;
+                }
             }
         }
-    }
 
-    function updateCheckboxNames(filterCategoryId) {
-        let checkboxes = {};
+        function updateCheckboxNames(filterCategoryId) {
+            let checkboxes = {};
 
-        document.querySelectorAll(`#${filterCategoryId} input[data-type='categorySubFilter']`)
-            .forEach(el => {
-                checkboxes[el.dataset.name] = el.checked
-            })
+            document.querySelectorAll(`#${filterCategoryId} input[data-type='categorySubFilter']`)
+                .forEach(el => {
+                    checkboxes[el.dataset.name] = el.checked
+                })
 
-        return checkboxes;
-    }
-</script>
+            return checkboxes;
+        }
+    </script>
+@endpush
