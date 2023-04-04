@@ -2,7 +2,8 @@
      class="py-5 px-2"
      x-cloak
      x-data="companyList()"
-     x-init="fetchCompanies()"
+
+     @foo.window="Alpine.eve"
 >
     <h1 x-show="isLoading">{{ __('Lading...') }}</h1>
 
@@ -72,14 +73,30 @@
                 companies: {},
                 fetchCompanies() {
                     this.isLoading = true;
+                    const url = new URL("{{ route('api.companies.list') }}");
 
-                    fetch("{{ route('api.companies.list') }}")
+                    const attributes = Alpine.store('companySearchForm');
+
+                    url.searchParams.set('categoryNames', btoa(JSON.stringify(attributes.categories ?? [])));
+                    url.searchParams.set('subcategoryNames', btoa(JSON.stringify(attributes.subcategories ?? [])));
+                    url.searchParams.set('lat', attributes.lat ?? null);
+                    url.searchParams.set('lng', attributes.lng ?? null);
+                    url.searchParams.set('place_id', attributes.place_id ?? null);
+
+                    fetch(url.toString())
                         .then(res => res.json())
                         .then(data => {
                             this.companies = data.data
                             this.isLoading = false;
                         })
-                }
+                },
+                init() {
+                    window.addEventListener('company-list-refresh', (event) => {
+                        this.fetchCompanies();
+                    })
+
+                    this.fetchCompanies()
+                },
             }
         }
 

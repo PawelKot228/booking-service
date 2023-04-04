@@ -24,24 +24,22 @@ loader.load()
             fields: ["place_id", "geometry", "formatted_address", "name"],
         })
 
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            const place = autocomplete.getPlace();
+
+            input.dataset.place_id = place.place_id;
+            input.dataset.lat = place.geometry.location.lat();
+            input.dataset.lng = place.geometry.location.lng();
+
+            let store = Alpine.store('companySearchForm')
+
+            store.place_id = place.place_id
+            store.lat = place.geometry.location.lat()
+            store.lng = place.geometry.location.lng()
+
+            Alpine.store('companySearchForm', store)
+        });
+
+
     });
-
-
-window.searchCompanyForm = function () {
-    return {
-
-        latitude: null,
-        longitude: null,
-        categories: [],
-        subcategories: [],
-        updateCoordinates() {
-
-        },
-        updateCategories() {
-
-        },
-        init() {
-
-        }
-    }
-}

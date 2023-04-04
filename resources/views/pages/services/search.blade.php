@@ -7,7 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"
-             x-data="window.searchCompanyForm"
         >
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-wrap lg:flex-nowrap gap-y-2 items-center p-2">
@@ -26,7 +25,9 @@
                             </div>
                             <input type="text" id="search-place-input"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="Search" required>
+                                   placeholder="Search" required
+                                   data-place_id="" data-lat="" data-lng=""
+                            >
                         </div>
                     </div>
 
@@ -35,7 +36,10 @@
                     </div>
 
                     <div class="w-full lg:w-1/4 px-2">
-                        <x-button class="w-full" id="searchCompanyButton">
+                        <x-button class="w-full" id="searchCompanyButton"
+                                  x-data
+                                  x-on:click="window.dispatchEvent(new CustomEvent('company-list-refresh'))"
+                        >
                             {{ __('Apply') }}
                         </x-button>
 
@@ -50,6 +54,7 @@
             </div>
         </div>
     </div>
+
 </x-app-layout>
 
 

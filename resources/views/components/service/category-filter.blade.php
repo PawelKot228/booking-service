@@ -88,6 +88,7 @@
                         });
 
                     this.selected = !this.selected;
+                    this.store()
                 },
                 unselectSubcategory(checkboxName) {
                     const checkbox = document.querySelector(`input[data-name='${checkboxName}']`);
@@ -102,6 +103,36 @@
                         });
 
                     this.selected = allSelected;
+                    this.store()
+                },
+                store() {
+                    let store = Alpine.store('companySearchForm') ?? {};
+
+                    store.categories ??= [];
+                    store.subcategories ??= [];
+
+                    if (this.selected) {
+                        store.categories.push(category)
+                    } else {
+                        let index = store.categories.indexOf(category)
+                        store.categories.splice(index, 1)
+                    }
+                    for (const [name, checked] of Object.entries(this.checkboxes)) {
+                        let index = null;
+                        if (!checked) {
+                            index = store.subcategories.indexOf(name)
+                            store.subcategories.splice(index, 1)
+
+                            continue;
+                        }
+
+                        if (!store.subcategories.includes(name)) {
+                            store.subcategories.push(name);
+                        }
+                    }
+
+                    Alpine.store('companySearchForm', store)
+                    console.log(store.categories, store.subcategories)
                 },
                 init() {
                     const check = selectedCategory === category;
@@ -112,6 +143,10 @@
                         .forEach(el => {
                             this.checkboxes[el.dataset.name] = check
                         })
+
+                    if (check) {
+                        this.store()
+                    }
                 }
             }
         }
