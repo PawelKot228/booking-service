@@ -7,28 +7,26 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('employee_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('service_id')->constrained()->cascadeOnDelete();
-            $table->dateTime('from');
-            $table->dateTime('to');
-            $table->decimal('price');
+            $table->foreignId('appointment_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->text('text')->nullable();
+            $table->unsignedTinyInteger('rating');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::table('appointments', function (Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             $table->dropConstrainedForeignId('user_id');
-            $table->dropConstrainedForeignId('employee_id');
             $table->dropConstrainedForeignId('company_id');
-            $table->dropConstrainedForeignId('service_id');
+            $table->dropConstrainedForeignId('appointment_id');
         });
 
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('reviews');
     }
 };

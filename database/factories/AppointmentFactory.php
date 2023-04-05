@@ -18,17 +18,11 @@ class AppointmentFactory extends Factory
         $dateFrom = Carbon::parse($this->faker->dateTimeBetween('-3 months', '+3 months'));
         $dateTo = $dateFrom->clone()->addHour();
 
-        $rating = null;
-        if (now()->greaterThan($dateTo)) {
-            $rating = $this->faker->numberBetween(1, 5);
-        }
-
         return [
             'user_id' => $this->faker->randomNumber(),
             'employee_id' => $this->faker->randomNumber(),
             'from' => $dateFrom,
             'to' => $dateTo,
-            'rating' => $rating,
             'price' => $this->faker->numberBetween(1000, 500000) / 100,
             'created_at' => now(),
             'updated_at' => now(),

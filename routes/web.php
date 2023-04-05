@@ -5,6 +5,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Pages\Services\ServicesCategoryPage;
 use App\Http\Controllers\Pages\Services\ServicesPage;
 use App\Http\Controllers\Pages\Services\ServicesSearchPage;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,8 @@ Route::prefix('services')
     });
 
 
-Route::resource('companies', CompanyController::class)
-    ->except('index');
+Route::resource('companies', CompanyController::class);
+Route::resource('companies.reviews', ReviewController::class);
 
 
 Route::middleware([

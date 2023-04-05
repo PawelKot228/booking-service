@@ -29,8 +29,12 @@ class CompanyResource extends JsonResource
                 'categories' => $categories,
                 'subcategories' => $subcategories,
             ],
+            'reviews' => [
+                'url' => route('companies.reviews.index', ['company' => $this->id]),
+                'count' => 5,
+                'avg_rating' => number_format((float)$this->appointments_avg_rating, 2),
+            ],
             'description' => $this->description,
-            'appointments_avg_rating' => number_format((float)$this->appointments_avg_rating, 2),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
