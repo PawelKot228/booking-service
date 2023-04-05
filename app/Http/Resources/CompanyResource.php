@@ -20,6 +20,7 @@ class CompanyResource extends JsonResource
             }
         }
 
+
         return [
             'id' => $this->id,
             'url' => route('companies.show', ['company' => $this->id]),
@@ -29,7 +30,7 @@ class CompanyResource extends JsonResource
                 'subcategories' => $subcategories,
             ],
             'description' => $this->description,
-            'appointments_avg_rating' => $this->appointments_avg_rating ?? null,
+            'appointments_avg_rating' => number_format((float)$this->appointments_avg_rating, 2),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
