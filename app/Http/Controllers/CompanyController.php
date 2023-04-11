@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Company\FetchCompaniesList;
+use App\Http\Requests\CompanySearchRequest;
+use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(CompanySearchRequest $request, FetchCompaniesList $companiesQuery): AnonymousResourceCollection
     {
-        return view('pages.companies.index', compact('company'));
+        $companies = $companiesQuery->handle(Company::with(['categories']), $request)->get();
+
+        return CompanyResource::collection($companies);
     }
 
     public function create()

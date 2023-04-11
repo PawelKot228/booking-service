@@ -90,7 +90,7 @@
                 companies: {},
                 fetchCompanies() {
                     this.isLoading = true;
-                    const url = new URL("{{ route('api.companies.list') }}");
+                    const url = new URL("{{ route('companies.index') }}");
 
                     const attributes = Alpine.store('companySearchForm');
 

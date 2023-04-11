@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Company\GetCompaniesList;
+use App\Actions\Company\FetchCompaniesList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +19,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('companies')
-    ->name('companies.')
-    ->group(function () {
-        Route::get('/list', GetCompaniesList::class)->name('list');
-    });

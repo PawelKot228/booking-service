@@ -4,17 +4,14 @@ namespace App\Actions\Company;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanySearchRequest;
-use App\Http\Resources\CompanyResource;
-use App\Models\Company;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class GetCompaniesList extends Controller
+class FetchCompaniesList extends Controller
 {
-    public function __invoke(CompanySearchRequest $request): AnonymousResourceCollection
+    public function handle(Builder $query, CompanySearchRequest $request): Builder
     {
-        $query = Company::with(['categories']);
         $query->select([
             'companies.*',
             DB::raw('AVG(reviews.rating) as reviews_avg_rating')
@@ -40,11 +37,8 @@ class GetCompaniesList extends Controller
             $clause->on('reviews.company_id', '=', 'companies.id');
         });
 
-        $companies = $query
+        return $query
             ->groupBy('companies.id')
-            ->limit(20)
-            ->get();
-
-        return CompanyResource::collection($companies);
+            ->limit(20);
     }
 }
