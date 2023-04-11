@@ -12,7 +12,7 @@ class ReviewController extends Controller
     public function index($company): AnonymousResourceCollection
     {
         $reviews = Review::with('user')
-        ->where('company_id', $company)
+            ->where('company_id', $company)
             ->get();
 
         return ReviewResource::collection($reviews);
