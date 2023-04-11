@@ -32,7 +32,7 @@ class CompanyResource extends JsonResource
             'reviews' => [
                 'url' => route('companies.reviews.index', ['company' => $this->id]),
                 'count' => 5,
-                'avg_rating' => number_format((float)$this->appointments_avg_rating, 2),
+                'avg_rating' => number_format((float)$this->reviews_avg_rating, 2),
             ],
             'description' => $this->description,
             'created_at' => $this->created_at,
