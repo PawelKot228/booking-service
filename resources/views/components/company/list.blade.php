@@ -2,8 +2,6 @@
      class="py-5 px-2"
      x-cloak
      x-data="companyList()"
-
-     @foo.window="Alpine.eve"
 >
     <h1 x-show="isLoading">{{ __('Lading...') }}</h1>
 

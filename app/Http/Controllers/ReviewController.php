@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReviewResource;
+use App\Models\Company;
 use App\Models\Review;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index($company): AnonymousResourceCollection
     {
+        $reviews = Review::with('user')
+        ->where('company_id', $company)
+            ->get();
 
+        return ReviewResource::collection($reviews);
     }
 
     public function create()

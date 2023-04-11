@@ -26,6 +26,10 @@
                     </div>
                 </section>
 
+                <x-company.comments-section :company="$company">
+                    {{ __('Comments') }}
+                </x-company.comments-section>
+
 {{--                @dump($company)--}}
             </div>
         </div>
