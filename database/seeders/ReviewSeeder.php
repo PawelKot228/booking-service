@@ -14,12 +14,16 @@ class ReviewSeeder extends Seeder
 
         $reviews = [];
         foreach ($appointments as $appointment) {
-            $reviews[] = Review::factory()
-                ->withCompany($appointment->company_id)
-                ->withCustomer($appointment->user_id)
-                ->withAppointment($appointment->id)
-                ->make()
-                ->toArray();
+            $reviews[] = [
+                ...Review::factory()
+                    ->withCompany($appointment->company_id)
+                    ->withCustomer($appointment->user_id)
+                    ->withAppointment($appointment->id)
+                    ->make()
+                    ->toArray(),
+                'created_at' => now()->toDateTime(),
+                'updated_at' => now()->toDateTime(),
+            ];
         }
 
         foreach (array_chunk($reviews, 250) as $reviewsChunk) {

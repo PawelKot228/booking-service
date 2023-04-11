@@ -21,6 +21,8 @@ class ReviewFactory extends Factory
             'title' => $this->faker->word(),
             'text' => $this->faker->text(),
             'rating' => $this->faker->numberBetween(1, 5),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 
