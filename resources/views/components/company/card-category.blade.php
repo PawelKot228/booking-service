@@ -42,7 +42,7 @@
                                     data-modal-toggle="appointmentModal"
                                     data-url="{{ route('company.service.appointments.available-list', ['company' => $category->company_id, 'service' => $service->id]) }}"
                                     x-data
-                                    x-on:click="this.dispatchEvent(new CustomEvent('company-appointment-modal'))"
+                                    @click="$dispatch('company-appointment-modal')"
                             >
                                 {{ __('Make an appointment') }}
                             </x-button>

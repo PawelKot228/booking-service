@@ -37,6 +37,7 @@ class ServiceAppointmentListResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
+            'currency' => $this->currency,
             'availableAppointments' => $appointmentHours,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
