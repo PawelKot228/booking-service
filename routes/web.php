@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Pages\Services\ServicesCategoryPage;
@@ -22,6 +23,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('home');
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
+});
+
 Route::prefix('services')
     ->name('services.')
     ->group(function () {
@@ -30,15 +39,14 @@ Route::prefix('services')
         Route::get('/search', [ServiceController::class, 'search'])->name('search');
     });
 
+Route::prefix('/companies/{company}/services/{service}/appointments')
+    ->name('company.service.appointments.')
+    ->group(function () {
+        Route::get('/available', [AppointmentController::class, 'availableList'])->name('available-list');
+    });
+
 
 Route::resource('companies', CompanyController::class);
 Route::resource('companies.reviews', ReviewController::class);
+Route::resource('companies.services.appointments', AppointmentController::class);
 
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
-});

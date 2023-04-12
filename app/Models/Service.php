@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -21,9 +22,9 @@ class Service extends Model
         return $this->hasMany(Appointment::class);
     }
 
-    public function company(): HasOne
+    public function company(): BelongsTo
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 
     public function promotionServices(): HasMany

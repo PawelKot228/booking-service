@@ -20,18 +20,33 @@
                             </p>
                         </div>
                         <div class="grid grid-cols-2 gap-4 mt-8">
-                            <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1">
-                            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
+                            <img class="w-full rounded-lg"
+                                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
+                                 alt="office content 1">
+                            <img class="mt-4 w-full lg:mt-10 rounded-lg"
+                                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
+                                 alt="office content 2">
                         </div>
                     </div>
                 </section>
+
+                <x-company.categories-section :company="$company">
+                    {{ __('Services') }}
+                </x-company.categories-section>
 
                 <x-company.comments-section :company="$company">
                     {{ __('Comments') }}
                 </x-company.comments-section>
 
-{{--                @dump($company)--}}
+                {{--                @dump($company)--}}
             </div>
         </div>
     </div>
+
+    @push('modals')
+        <x-appointment.create-modal :company="$company">
+            {{ __('Make an appointment') }}
+        </x-appointment.create-modal>
+    @endpush
+
 </x-app-layout>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Currency;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,8 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price');
+            $table->unsignedInteger('duration')->default(30);
+            $table->string('currency', 32)->default(Currency::EURO->value);
             $table->timestamps();
         });
     }

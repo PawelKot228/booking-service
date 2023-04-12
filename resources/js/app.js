@@ -8,7 +8,6 @@ import 'flowbite';
 window.Alpine = Alpine;
 
 Alpine.plugin(focus);
-
 Alpine.start();
 
 const loader = new Loader({
@@ -17,29 +16,29 @@ const loader = new Loader({
     libraries: ["places"],
 });
 
-loader.load()
-    .then(async (google) => {
-        let input = document.getElementById("search-place-input");
-        let autocomplete = new google.maps.places.Autocomplete(input, {
-            fields: ["place_id", "geometry", "formatted_address", "name"],
-        })
+const googleMapsPlaceInput = document.getElementById("search-place-input");
+if (googleMapsPlaceInput) {
+    loader.load()
+        .then(async (google) => {
+            let autocomplete = new google.maps.places.Autocomplete(googleMapsPlaceInput, {
+                fields: ["place_id", "geometry", "formatted_address", "name"],
+            })
 
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                const place = autocomplete.getPlace();
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-            const place = autocomplete.getPlace();
+                googleMapsPlaceInput.dataset.place_id = place.place_id;
+                googleMapsPlaceInput.dataset.lat = place.geometry.location.lat();
+                googleMapsPlaceInput.dataset.lng = place.geometry.location.lng();
 
-            input.dataset.place_id = place.place_id;
-            input.dataset.lat = place.geometry.location.lat();
-            input.dataset.lng = place.geometry.location.lng();
+                let store = Alpine.store('companySearchForm')
 
-            let store = Alpine.store('companySearchForm')
+                store.place_id = place.place_id
+                store.lat = place.geometry.location.lat()
+                store.lng = place.geometry.location.lng()
 
-            store.place_id = place.place_id
-            store.lat = place.geometry.location.lat()
-            store.lng = place.geometry.location.lng()
-
-            Alpine.store('companySearchForm', store)
+                Alpine.store('companySearchForm', store)
+            });
         });
+}
 
-
-    });

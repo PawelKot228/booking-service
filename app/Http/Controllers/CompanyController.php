@@ -30,7 +30,9 @@ class CompanyController extends Controller
 
     public function show(string $id)
     {
-        $company = Company::findOrFail($id);
+        $company = Company::with([
+            'categories' => ['services']
+        ])->findOrFail($id);
 
         return view('pages.companies.show', compact('company'));
     }
