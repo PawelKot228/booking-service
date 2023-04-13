@@ -10,9 +10,10 @@ return new class extends Migration {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('employee_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('employee_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
+            $table->date('date');
             $table->dateTime('from');
             $table->dateTime('to');
             $table->decimal('price');

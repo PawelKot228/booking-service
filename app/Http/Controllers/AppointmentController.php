@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AvailableAppointmentsRequest;
 use App\Http\Resources\ServiceAppointmentListResource;
 use App\Models\Appointment;
-use App\Models\Company;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
-    public function availableList($company, $service)
-    {
+    public function availableList(
+        AvailableAppointmentsRequest $request,
+        $company,
+        $service
+    ): ServiceAppointmentListResource {
         $service = Service::with('company')
             ->has('company')
             ->findOrFail($service);
@@ -28,7 +32,7 @@ class AppointmentController extends Controller
     {
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $company, $service)
     {
     }
 

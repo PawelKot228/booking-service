@@ -3,11 +3,9 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\Pages\Services\ServicesCategoryPage;
-use App\Http\Controllers\Pages\Services\ServicesPage;
-use App\Http\Controllers\Pages\Services\ServicesSearchPage;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserAppointmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,14 +19,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', IndexController::class)->name('home');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    //'auth',
+    //'verified'
 ])->group(function () {
+Route::get('/', IndexController::class)->name('home');
     Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
+
+    Route::prefix('users')
+        ->name('users.')
+        ->group(function () {
+            Route::resource('appointments', UserAppointmentController::class);
+        });
 });
 
 Route::prefix('services')
@@ -49,4 +54,3 @@ Route::prefix('/companies/{company}/services/{service}/appointments')
 Route::resource('companies', CompanyController::class);
 Route::resource('companies.reviews', ReviewController::class);
 Route::resource('companies.services.appointments', AppointmentController::class);
-

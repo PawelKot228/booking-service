@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\TransientToken;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,16 @@ class User extends Authenticatable
     public function employerCompanies(): HasManyThrough
     {
         return $this->hasManyThrough(Company::class, CompanyUser::class);
+    }
+
+    public function generateSiteToken()
+    {
+        //(new TransientToken())->
+        //if ($this->currentAccessToken()){
+        //    return $this->currentAccessToken();
+        //
+        //}
+
+        //return $this->createToken('')
     }
 }
