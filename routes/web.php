@@ -23,10 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    //'auth',
-    //'verified'
+    'verified'
 ])->group(function () {
-Route::get('/', IndexController::class)->name('home');
+    Route::get('/', IndexController::class)->name('home');
     Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
 
     Route::prefix('users')
