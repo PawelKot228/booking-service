@@ -23,7 +23,6 @@ class AppointmentFactory extends Factory
             'employee_id' => $this->faker->randomNumber(),
             'company_id' => $this->faker->randomNumber(),
             'service_id' => $this->faker->randomNumber(),
-            'date' => $this->faker->date(),
             'from' => $dateFrom,
             'to' => $dateTo,
             'price' => $this->faker->numberBetween(1000, 500000) / 100,

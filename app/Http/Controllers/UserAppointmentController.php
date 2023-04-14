@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserAppointmentController extends Controller
@@ -15,7 +16,7 @@ class UserAppointmentController extends Controller
     {
     }
 
-    public function store(UserAppointmentStoreRequest $request)
+    public function store(UserAppointmentStoreRequest $request): JsonResponse
     {
         /** @var User $user */
         $user = auth()->user();
@@ -31,8 +32,7 @@ class UserAppointmentController extends Controller
             'price' => $service->price,
         ]);
 
-
-        return $appointment;
+        return response()->json($appointment);
     }
 
     public function show(Appointment $appointment)

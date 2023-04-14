@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.15.1",
-        "daisyui": "^2.51.5"
+        "daisyui": "^2.51.5",
+        "dayjs": "^1.11.7"
     }
 }

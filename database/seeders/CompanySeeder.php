@@ -14,7 +14,7 @@ class CompanySeeder extends Seeder
         $users = User::select('id')->get();
         $syncUsers = [];
 
-        foreach ($users->random(500) as $user) {
+        foreach ($users->random(200) as $user) {
             $companies = Company::factory()
                 ->count(random_int(1, 3))
                 ->create(['user_id' => $user->getKey()]);

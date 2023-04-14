@@ -9,14 +9,13 @@ class UserAppointmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'service_id' => ['required', 'exists:services'],
-            'day' => ['required', 'date'],
-            'from' => ['required', 'date_format:H:i'],
+            'service_id' => ['required', 'exists:services,id'],
+            'from' => ['required', 'date_format:Y-m-d H:i:s'],
         ];
     }
 
     public function authorize(): bool
     {
-        return (bool)auth()->id();
+        return true;
     }
 }

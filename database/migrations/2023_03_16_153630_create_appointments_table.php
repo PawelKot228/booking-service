@@ -13,9 +13,8 @@ return new class extends Migration {
             $table->foreignId('employee_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
-            $table->date('date');
-            $table->dateTime('from');
-            $table->dateTime('to');
+            $table->timestamp('from');
+            $table->timestamp('to');
             $table->decimal('price');
             $table->timestamps();
         });

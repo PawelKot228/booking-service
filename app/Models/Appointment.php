@@ -10,11 +10,17 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'company_id',
         'service_id',
         'from',
         'to',
         'rating',
         'price',
+    ];
+
+    protected $casts = [
+        'from' => 'datetime',
+        'to' => 'datetime',
     ];
 
     public function company(): BelongsTo

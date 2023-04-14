@@ -28,6 +28,8 @@ class AppointmentSeeder extends Seeder
                 foreach ($factoryAppointments as $appointment) {
                     $appointments[] = [
                         ...$appointment->toArray(),
+                        'from' => $appointment['from']->toDateTime(),
+                        'to' => $appointment['to']->toDateTime(),
                         'created_at' => now()->toDateTime(),
                         'updated_at' => now()->toDateTime(),
                     ];

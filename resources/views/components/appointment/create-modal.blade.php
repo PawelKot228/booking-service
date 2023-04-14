@@ -207,23 +207,23 @@
                     scheduleAppointment() {
                         console.log('post', this.scheduleUrl)
 
+                        // let date = new Date(Date.parse(`${this.selectedDay} ${this.selectedTime}`));
+
+                        let date = dayjs(`${this.selectedDay} ${this.selectedTime}`);
+
                         const body = {
                             service_id: this.service.id,
-                            day: this.selectedDay,
-                            from: this.selectedTime,
+                            from: date.format('YYYY-MM-DD HH:mm:ss'),
                         }
 
                         fetch(this.scheduleUrl, {
                             method: 'POST',
                             headers: {
+                                'Accept': 'aplication/json',
+                                'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content,
-                                'Authorization': 'Bearer ' + document.head.querySelector('meta[name=sanctum-token]').content,
                             },
-                            body: JSON.stringify({
-                                service_id: this.service.id,
-                                day: this.selectedDay,
-                                from: this.selectedTime,
-                            })
+                            body: JSON.stringify(body)
                         })
                             .then(res => res.json())
                             .then((data) => {

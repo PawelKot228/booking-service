@@ -4,8 +4,10 @@ import Alpine from 'alpinejs';
 import focus from '@alpinejs/focus';
 import {Loader} from "@googlemaps/js-api-loader"
 import 'flowbite';
+import dayjs from "dayjs";
 
 window.Alpine = Alpine;
+window.dayjs = dayjs;
 
 Alpine.plugin(focus);
 Alpine.start();
