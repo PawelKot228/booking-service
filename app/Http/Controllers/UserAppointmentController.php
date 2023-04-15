@@ -14,6 +14,14 @@ class UserAppointmentController extends Controller
 {
     public function index()
     {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $appointments = Appointment::with(['company', 'service', 'employee'])
+            ->where('user_id', $user->getKey())
+            ->paginate(5);
+
+        return view('pages.users.appointments.index', compact('appointments'));
     }
 
     public function store(UserAppointmentStoreRequest $request): JsonResponse

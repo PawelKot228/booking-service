@@ -16,8 +16,14 @@
                         {{ __('Home') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('services.categories') }}"
-                                :active="request()->routeIs('services.categories')">
+                                :active="request()->routeIs('services.categories')"
+                    >
                         {{ __('Services') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('services.search') }}"
+                                :active="request()->routeIs('services.search')"
+                    >
+                        {{ __('Search') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -70,11 +76,15 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                    <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                        {{ __('API Tokens') }}
-                                    </x-dropdown-link>
-                                @endif
+                                <x-dropdown-link href="{{ route('users.appointments.index') }}">
+                                    {{ __('Appointments') }}
+                                </x-dropdown-link>
+
+{{--                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())--}}
+{{--                                    <x-dropdown-link href="{{ route('api-tokens.index') }}">--}}
+{{--                                        {{ __('API Tokens') }}--}}
+{{--                                    </x-dropdown-link>--}}
+{{--                                @endif--}}
 
                                 <div class="border-t border-gray-200"></div>
 
@@ -121,6 +131,10 @@
                                    :active="request()->routeIs('services.categories')">
                 {{ __('Services') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('services.search') }}"
+                                   :active="request()->routeIs('services.search')">
+                {{ __('Search') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -153,13 +167,19 @@
                                            :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('users.appointments.index') }}"
+                                           :active="request()->routeIs('users.appointments.index')"
+                    >
+                        {{ __('Appointments') }}
+                    </x-responsive-nav-link>
 
-                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                        <x-responsive-nav-link href="{{ route('api-tokens.index') }}"
-                                               :active="request()->routeIs('api-tokens.index')">
-                            {{ __('API Tokens') }}
-                        </x-responsive-nav-link>
-                    @endif
+{{--                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())--}}
+{{--                        <x-responsive-nav-link href="{{ route('api-tokens.index') }}"--}}
+{{--                                               :active="request()->routeIs('api-tokens.index')"--}}
+{{--                        >--}}
+{{--                            {{ __('API Tokens') }}--}}
+{{--                        </x-responsive-nav-link>--}}
+{{--                    @endif--}}
 
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
