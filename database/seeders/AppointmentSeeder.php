@@ -37,7 +37,7 @@ class AppointmentSeeder extends Seeder
             }
         }
 
-        foreach (array_chunk($appointments, 250) as $appointmentsChunk) {
+        foreach (array_chunk($appointments, 50) as $appointmentsChunk) {
             Appointment::insert($appointmentsChunk);
         }
     }

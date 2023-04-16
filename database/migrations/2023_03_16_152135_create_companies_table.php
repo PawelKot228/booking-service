@@ -12,12 +12,21 @@ return new class extends Migration {
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
             $table->text('description');
+            $table->string('street_name');
+            $table->string('street_number', 64);
+            $table->string('apartment_number', 64)->nullable();
+            $table->string('zip_code', 64)->nullable();
+            $table->string('city');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
+        Schema::table('companies', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('user_id');
+        });
+
         Schema::dropIfExists('companies');
     }
 };

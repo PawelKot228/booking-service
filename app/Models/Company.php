@@ -47,4 +47,15 @@ class Company extends Model
     {
         return $this->hasMany(Service::class);
     }
+
+    public function getFormattedStreet(): string
+    {
+        $streetNumber = $this->street_number;
+
+        if ($this->apartament_number) {
+            $streetNumber .= "/$this->apartament_number";
+        }
+
+        return "$this->street_name $streetNumber";
+    }
 }

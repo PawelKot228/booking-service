@@ -45,6 +45,9 @@ class UserAppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
+        $appointment->load(['service', 'company', 'employee']);
+
+        return view('pages.users.appointments.show', compact('appointment'));
     }
 
     public function update(Request $request, Appointment $appointment)

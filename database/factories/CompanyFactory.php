@@ -14,6 +14,11 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'street_name' => $this->faker->streetName(),
+            'street_number' => $this->faker->buildingNumber(),
+            'apartment_number' => $this->faker->optional()->buildingNumber(),
+            'zip_code' => $this->faker->postcode(),
+            'city' => $this->faker->city(),
             'description' => $this->faker->text(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
