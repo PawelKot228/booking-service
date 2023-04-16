@@ -13,7 +13,7 @@ class AppointmentFactory extends Factory
 {
     protected $model = Appointment::class;
 
-    public function definition(): array
+    public function definition()
     {
         $dateFrom = Carbon::parse($this->faker->dateTimeBetween('-3 months', '+3 months'));
         $dateTo = $dateFrom->clone()->addHour();
@@ -23,8 +23,8 @@ class AppointmentFactory extends Factory
             'employee_id' => $this->faker->randomNumber(),
             'company_id' => $this->faker->randomNumber(),
             'service_id' => $this->faker->randomNumber(),
-            'from' => $dateFrom,
-            'to' => $dateTo,
+            'from' => $dateFrom->format('Y-m-d H:i:s'),
+            'to' => $dateTo->format('Y-m-d H:i:s'),
             'price' => $this->faker->numberBetween(1000, 500000) / 100,
             'created_at' => now(),
             'updated_at' => now(),
