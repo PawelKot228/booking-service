@@ -20,12 +20,12 @@ class CompanyController extends Controller
 
     public function create()
     {
-        //
+        return view('pages.companies.create');
     }
 
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     public function show(string $id)

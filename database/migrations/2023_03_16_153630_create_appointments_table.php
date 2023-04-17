@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AppointmentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('employee_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
+            $table->unsignedTinyInteger('status')->default(AppointmentStatus::PENDING->value);
             $table->timestamp('from');
             $table->timestamp('to');
             $table->decimal('price');

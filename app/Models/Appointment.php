@@ -14,7 +14,7 @@ class Appointment extends Model
         'service_id',
         'from',
         'to',
-        'rating',
+        'status',
         'price',
     ];
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAppointmentController;
+use App\Http\Controllers\UserCompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,8 @@ Route::middleware([
         ->name('users.')
         ->group(function () {
             Route::resource('appointments', UserAppointmentController::class);
+            Route::resource('companies', UserCompanyController::class)
+            ->except(['create', 'store']);
         });
 });
 
