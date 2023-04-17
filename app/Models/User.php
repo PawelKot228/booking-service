@@ -62,15 +62,4 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Company::class, CompanyUser::class);
     }
-
-    public function generateSiteToken()
-    {
-        //(new TransientToken())->
-        //if ($this->currentAccessToken()){
-        //    return $this->currentAccessToken();
-        //
-        //}
-
-        //return $this->createToken('')
-    }
 }
