@@ -20,6 +20,8 @@ class CompanyFactory extends Factory
             'zip_code' => $this->faker->postcode(),
             'city' => $this->faker->city(),
             'description' => $this->faker->text(),
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

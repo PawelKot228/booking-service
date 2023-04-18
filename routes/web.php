@@ -33,8 +33,7 @@ Route::middleware([
         ->name('users.')
         ->group(function () {
             Route::resource('appointments', UserAppointmentController::class);
-            Route::resource('companies', UserCompanyController::class)
-            ->except(['create', 'store']);
+            Route::resource('companies', UserCompanyController::class);
         });
 });
 
@@ -53,6 +52,13 @@ Route::prefix('/companies/{company}/services/{service}/appointments')
     });
 
 
-Route::resource('companies', CompanyController::class);
-Route::resource('companies.reviews', ReviewController::class);
-Route::resource('companies.services.appointments', AppointmentController::class);
+Route::prefix('companies')
+    ->name('companies.')
+    ->group(function () {
+        Route::resource('', CompanyController::class)
+            ->only(['index', 'show']);
+        Route::resource('reviews', ReviewController::class);
+        Route::resource('services.appointments', AppointmentController::class);
+
+    });
+

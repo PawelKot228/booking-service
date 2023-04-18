@@ -53,7 +53,7 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'employee_id');
     }
 
-    public function ownedCompany(): HasMany
+    public function ownedCompanies(): HasMany
     {
         return $this->hasMany(Company::class);
     }

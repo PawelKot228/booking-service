@@ -94,7 +94,18 @@
 
                                 <div class="border-t border-gray-200"></div>
 
-                                <x-dropdown-link href="{{ route('companies.create') }}">
+                                @if(auth()->user()->ownedCompanies)
+                                    @foreach(auth()->user()->ownedCompanies as $company)
+                                        <x-dropdown-link href="{{ route('users.companies.show', ['company' => $company->id]) }}">
+                                            {{ $company->name }}
+                                        </x-dropdown-link>
+                                    @endforeach
+
+                                    <div class="border-t border-gray-200"></div>
+
+                                @endif
+
+                                <x-dropdown-link href="{{ route('users.companies.create') }}">
                                     {{ __('Create company') }}
                                 </x-dropdown-link>
 
@@ -186,11 +197,19 @@
                         {{ __('Appointments') }}
                     </x-responsive-nav-link>
 
-                    <x-responsive-nav-link href="{{ route('companies.create') }}"
-                                           :active="request()->routeIs('companies.create')"
-                    >
-                        {{ __('Create company') }}
-                    </x-responsive-nav-link>
+                    @if(auth()->user()->ownedCompanies)
+                        @foreach(auth()->user()->ownedCompanies as $company)
+                            <x-responsive-nav-link href="{{ route('users.companies.show', ['company' => $company->id]) }}">
+                                {{ $company->name }}
+                            </x-responsive-nav-link>
+                        @endforeach
+                    @else
+                        <x-responsive-nav-link href="{{ route('users.companies.create') }}"
+                                               :active="request()->routeIs('users.companies.create')"
+                        >
+                            {{ __('Create company') }}
+                        </x-responsive-nav-link>
+                    @endif
 
                     {{--                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())--}}
                     {{--                        <x-responsive-nav-link href="{{ route('api-tokens.index') }}"--}}

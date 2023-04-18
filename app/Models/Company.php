@@ -16,6 +16,18 @@ class Company extends Model
     protected $fillable = [
         'name',
         'description',
+        'street_name',
+        'street_number',
+        'apartment_number',
+        'zip_code',
+        'city',
+        'latitude',
+        'longitude',
+    ];
+
+    protected $casts = [
+        'latitude' => 'decimal',
+        'longitude' => 'decimal',
     ];
 
     public function owner(): BelongsTo
