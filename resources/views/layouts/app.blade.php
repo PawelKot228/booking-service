@@ -34,6 +34,8 @@
             </main>
         </div>
 
+        <x-notification-box />
+
         @stack('modals')
         @livewireScripts
         @stack('js')

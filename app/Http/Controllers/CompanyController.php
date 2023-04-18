@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Actions\Company\FetchCompaniesList;
 use App\Http\Requests\CompanySearchRequest;
+use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -23,9 +26,22 @@ class CompanyController extends Controller
         return view('pages.companies.create');
     }
 
-    public function store(Request $request)
+    public function store(CompanyStoreRequest $request): RedirectResponse
     {
-        dd($request->all());
+        /** @var User $user */
+        $user = auth()->user();
+
+        try {
+            $company = $user->ownedCompany()->create($request->validated());
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage() . ' ' . $exception->getFile() . '@' . $exception->getLine());
+            return redirect()
+                ->back()
+                ->withErrors(__('Could not create a company'));
+        }
+
+        return to_route('companies.show', ['company' => $company->getKey()])
+            ->with('success', [__('Successfully created a company!')]);
     }
 
     public function show(string $id)
@@ -39,7 +55,11 @@ class CompanyController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $company = Company::with(['services', 'categories'])
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        return view('pages.companies.edit', compact('company'));
     }
 
     public function update(Request $request, string $id)
