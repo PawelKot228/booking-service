@@ -94,13 +94,18 @@
 
                     const attributes = Alpine.store('companySearchForm');
 
-                    url.searchParams.set('categoryNames', btoa(JSON.stringify(attributes?.categories ?? [])));
-                    url.searchParams.set('subcategoryNames', btoa(JSON.stringify(attributes?.subcategories ?? [])));
+                    url.searchParams.set('categoryNames', (attributes?.categories ?? []).join(','));
+                    url.searchParams.set('subcategoryNames', (attributes?.subcategories ?? []).join(','));
                     url.searchParams.set('lat', attributes?.lat ?? null);
                     url.searchParams.set('lng', attributes?.lng ?? null);
                     url.searchParams.set('place_id', attributes?.place_id ?? null);
 
-                    fetch(url.toString())
+                    fetch(url.toString(), {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                    })
                         .then(res => res.json())
                         .then(data => {
                             this.companies = data.data

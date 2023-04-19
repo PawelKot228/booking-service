@@ -19,8 +19,8 @@ class CompanySearchRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'categoryNames' => json_decode(base64_decode($this->categoryNames), true, 512, JSON_THROW_ON_ERROR),
-            'subcategoryNames' => json_decode(base64_decode($this->subcategoryNames), true, 512, JSON_THROW_ON_ERROR),
+            'categoryNames' => str($this->categoryNames ?? '')->explode(',')->filter()->toArray(),
+            'subcategoryNames' => str($this->subcategoryNames ?? '')->explode(',')->filter()->toArray(),
         ]);
     }
 }
