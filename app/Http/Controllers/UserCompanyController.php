@@ -39,6 +39,7 @@ class UserCompanyController extends Controller
     }
     public function show(Company $company)
     {
+        return view('pages.users.companies.show', compact('company'));
     }
 
     public function edit(string $id)

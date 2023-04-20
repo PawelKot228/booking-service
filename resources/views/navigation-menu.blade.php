@@ -95,6 +95,10 @@
                                 <div class="border-t border-gray-200"></div>
 
                                 @if(auth()->user()->ownedCompanies)
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ __('Select Company') }}
+                                    </div>
+
                                     @foreach(auth()->user()->ownedCompanies as $company)
                                         <x-dropdown-link href="{{ route('users.companies.show', ['company' => $company->id]) }}">
                                             {{ $company->name }}

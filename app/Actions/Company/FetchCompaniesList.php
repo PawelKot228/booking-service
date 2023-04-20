@@ -14,7 +14,8 @@ class FetchCompaniesList extends Controller
     {
         $query->select([
             'companies.*',
-            DB::raw('AVG(reviews.rating) as reviews_avg_rating')
+            DB::raw('AVG(reviews.rating) as reviews_avg_rating'),
+            DB::raw('COUNT(reviews.rating) as reviews_count'),
         ]);
 
         $query->join(

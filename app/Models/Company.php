@@ -26,6 +26,7 @@ class Company extends Model
     ];
 
     protected $casts = [
+        'open_hours' => 'array',
         'latitude' => 'decimal',
         'longitude' => 'decimal',
     ];

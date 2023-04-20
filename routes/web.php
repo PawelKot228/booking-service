@@ -52,11 +52,11 @@ Route::prefix('/companies/{company}/services/{service}/appointments')
     });
 
 
+Route::resource('companies', CompanyController::class)
+    ->only(['index', 'show']);
 Route::prefix('companies')
     ->name('companies.')
     ->group(function () {
-        Route::resource('', CompanyController::class)
-            ->only(['index', 'show']);
         Route::resource('reviews', ReviewController::class);
         Route::resource('services.appointments', AppointmentController::class);
 
