@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('apartment_number', 64)->nullable();
             $table->string('zip_code', 64)->nullable();
             $table->string('city');
-            $table->text('open_hours');
+            $table->text('open_hours')->nullable();
             $table->float('latitude');
             $table->float('longitude');
             $table->timestamps();

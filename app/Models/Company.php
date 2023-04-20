@@ -21,6 +21,7 @@ class Company extends Model
         'apartment_number',
         'zip_code',
         'city',
+        'open_hours',
         'latitude',
         'longitude',
     ];
