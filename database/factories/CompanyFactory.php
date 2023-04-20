@@ -15,8 +15,8 @@ class CompanyFactory extends Factory
     {
         $openingHours = [];
         foreach (Day::cases() as $day) {
-            $openingHours[$day->name]['open'] = '08:00';
-            $openingHours[$day->name]['close'] = '18:00';
+            $openingHours[$day->value]['open'] = '08:00';
+            $openingHours[$day->value]['close'] = '18:00';
         }
 
         return [

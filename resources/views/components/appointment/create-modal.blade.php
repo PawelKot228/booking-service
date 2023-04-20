@@ -224,7 +224,7 @@
                         fetch(url.toString())
                             .then(res => res.json())
                             .then(data => {
-                                this.service = data.data;
+                                this.service = data;
                                 this.availableAppointments = this.service.availableAppointments;
                                 this.openDays = this.service.openDays;
                                 this.scheduleUrl = this.service.appointmentUrl;
@@ -283,7 +283,7 @@
                             .catch((e) => {
                                 console.log(e)
                             })
-                            .finally((data) => {
+                            .finally(() => {
                                 this.isCreatingAppointment = false
                             })
                     },
