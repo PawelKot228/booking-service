@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="flex flex-wrap">
-                        <div class="w-full md:w-1/2 lg:w-1/3 space-y-4">
+                        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/2  space-y-4">
                             <div class="p-2">
                                 <x-label for="name" value="{{ __('Name') }}" />
                                 <x-input id="name" name="name" type="text" class="mt-1 block w-full"
@@ -45,7 +45,7 @@
                                @foreach(\App\Enums\Day::cases() as $day)
                                    <h6 class="text-sm font-semibold">{{ __($day->value) }}</h6>
                                    <div class="flex flex-wrap">
-                                       <div class="w-full md:w-1/2 ">
+                                       <div class="w-1/2">
                                            <div class="p-2">
                                                <x-label for="open_hours_{{ $day->value }}_open" value="{{ __('Open') }}" />
                                                <x-input id="open_hours_{{ $day->value }}_open"
@@ -56,7 +56,7 @@
                                                <x-input-error for="open_hours.{{ $day->value }}.open" class="mt-2" />
                                            </div>
                                        </div>
-                                       <div class="w-full md:w-1/2 ">
+                                       <div class="w-1/2">
                                            <div class="p-2">
                                                <x-label for="open_hours_{{ $day->value }}_close" value="{{ __('Close') }}" />
                                                <x-input id="open_hours_{{ $day->value }}_close"
@@ -72,7 +72,7 @@
                            </div>
 
                         </div>
-                        <div class="w-full md:w-1/2 lg:w-2/3">
+                        <div class="w-full md:w-1/2 lg:w-2/3 xl:w-1/2">
                             <div class="flex flex-wrap">
                                 <div class="w-full sm:w-1/2 md:w-full lg:w-1/2 p-2">
                                     <x-label for="street_name" value="{{ __('Street name') }}" />
