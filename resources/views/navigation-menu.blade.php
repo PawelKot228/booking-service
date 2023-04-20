@@ -94,7 +94,7 @@
 
                                 <div class="border-t border-gray-200"></div>
 
-                                @if(auth()->user()->ownedCompanies)
+                                @if(auth()->user()->ownedCompanies->isNotEmpty())
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ __('Select Company') }}
                                     </div>
