@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserCompanyEmployeeController extends Controller
 {
     public function index(Company $company)
     {
-        $company->load('employees');
-
         return view('pages.users.companies.employees.index', compact('company'));
     }
 
@@ -35,7 +35,20 @@ class UserCompanyEmployeeController extends Controller
     {
     }
 
-    public function destroy(User $user)
+    public function destroy(Company $company, $userId): RedirectResponse
     {
+        try {
+            $user = User::findOrFail($userId);
+            $company->employees()->detach($user->getKey());
+
+            flashSuccessNotification(__('Successfully deleted!'));
+        } catch (ModelNotFoundException $exception) {
+            flashErrorNotification(__("Could not find user"));
+        } catch (\Exception $exception) {
+            flashErrorNotification(__("Failed to delete"));
+            \Log::error("{$exception->getMessage()} - {$exception->getFile()}@{$exception->getLine()}");
+        }
+
+        return to_route('users.companies.employees.index', [$company]);
     }
 }

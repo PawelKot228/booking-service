@@ -7,8 +7,10 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAppointmentController;
 use App\Http\Controllers\UserCompanyAppointmentController;
+use App\Http\Controllers\UserCompanyCategoryController;
 use App\Http\Controllers\UserCompanyController;
 use App\Http\Controllers\UserCompanyEmployeeController;
+use App\Http\Controllers\UserCompanyServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +41,8 @@ Route::middleware([
             Route::resource('companies', UserCompanyController::class);
             Route::resource('companies.employees', UserCompanyEmployeeController::class);
             Route::resource('companies.appointments', UserCompanyAppointmentController::class);
+            Route::resource('companies.categories', UserCompanyCategoryController::class);
+            Route::resource('companies.categories.services', UserCompanyServiceController::class);
         });
 });
 

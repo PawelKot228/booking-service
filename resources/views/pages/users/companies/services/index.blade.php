@@ -9,11 +9,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <div class="text-right mb-2">
-                    <x-button-link href="{{ route('users.companies.employees.create', [$company]) }}">
-                        {{ __('Add Employee') }}
-                    </x-button-link>
+{{--                    <x-button-link href="{{ route('users.companies.categories.services.create', [$company]) }}">--}}
+{{--                        {{ __('Add Category') }}--}}
+{{--                    </x-button-link>--}}
                 </div>
-                <livewire:company-employee-table companyId="{{ $company->id }}" />
+                <livewire:company-service-table companyId="{{ $company->id }}" />
             </div>
         </div>
     </div>
