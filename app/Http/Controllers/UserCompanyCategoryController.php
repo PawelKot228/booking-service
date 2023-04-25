@@ -13,8 +13,9 @@ class UserCompanyCategoryController extends Controller
         return view('pages.users.companies.categories.index', compact('company'));
     }
 
-    public function create()
+    public function create(Company $company)
     {
+        return view('pages.users.companies.categories.create', compact('company'));
     }
 
     public function store(Request $request)
