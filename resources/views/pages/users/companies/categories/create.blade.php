@@ -13,7 +13,11 @@
                       method="POST"
                 >
                     @csrf
-
+                    <div class="text-right p-2">
+                        <x-button>
+                            {{ __('Save') }}
+                        </x-button>
+                    </div>
                     <div class="flex flex-wrap">
                         <div class="w-full md:w-3/4 lg:w-1/2"
                              x-data="categorySelect()"
@@ -24,7 +28,7 @@
                                           autofocus required
                                           x-on:change="selectedCategory()"
                                 >
-{{--                                    <option selected>{{ __('Choose a category') }}</option>--}}
+                                    {{--                                    <option selected>{{ __('Choose a category') }}</option>--}}
 
                                     @foreach(\App\Enums\ServiceCategory::cases() as $category)
                                         <option {{ $category->value == old('category') ? 'selected' : '' }}
@@ -74,9 +78,9 @@
                             <div class="p-2">
                                 <x-label for="description" value="{{ __('Description') }}"/>
                                 <x-textarea id="description" name="description" type="text" class="mt-1 block w-full"
-
+                                            :old="'description'"
                                 >
-                                    {{ old('description') }}
+
                                 </x-textarea>
                                 <x-input-error for="description" class="mt-2"/>
                             </div>
@@ -98,7 +102,7 @@
                         const cat = document.getElementById('category')
 
                         this.category = cat.value;
-console.log(this.category)
+                        console.log(this.category)
                         // const subcat = document.getElementById('subcategory')
 
                         this.updateSubcategory();
@@ -124,12 +128,12 @@ console.log(this.category)
 
                         subcat.querySelectorAll('option[selected]')
                             .forEach(option => {
-                            option.selected = false;
-                        })
+                                option.selected = false;
+                            })
 
                         let option = subcat.querySelectorAll(`option[value='${this.category}']`)
 
-                        if(option) {
+                        if (option) {
                             option.selected = true;
                         }
                     }

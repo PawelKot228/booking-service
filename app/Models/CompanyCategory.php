@@ -11,6 +11,8 @@ class CompanyCategory extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'category',
+        'subcategory',
         'name',
         'description',
     ];

@@ -27,15 +27,15 @@ class UserCompanyController extends Controller
 
         try {
             $company = $user->ownedCompanies()->create($request->validated());
+            flashSuccessNotification(__('Successfully created a company!'));
         } catch (\Exception $exception) {
-            \Log::error($exception->getMessage() . ' ' . $exception->getFile() . '@' . $exception->getLine());
-            return redirect()
-                ->back()
-                ->with(['notifications' => ['error' => __('Could not create a company')]]);
+            \Log::error("{$exception->getMessage()} - {$exception->getFile()}@{$exception->getLine()}");
+            flashErrorNotification(__('Could not create a company'));
+
+            return redirect()->back();
         }
 
-        return to_route('users.companies.edit', ['company' => $company->getKey()])
-            ->with('success', [__('Successfully created a company!')]);
+        return to_route('users.companies.edit', ['company' => $company->getKey()]);
     }
     public function show(Company $company)
     {

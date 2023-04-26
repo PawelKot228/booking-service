@@ -45,8 +45,8 @@ class UserCompanyEmployeeController extends Controller
         } catch (ModelNotFoundException $exception) {
             flashErrorNotification(__("Could not find user"));
         } catch (\Exception $exception) {
-            flashErrorNotification(__("Failed to delete"));
             \Log::error("{$exception->getMessage()} - {$exception->getFile()}@{$exception->getLine()}");
+            flashErrorNotification(__("Failed to delete"));
         }
 
         return to_route('users.companies.employees.index', [$company]);
