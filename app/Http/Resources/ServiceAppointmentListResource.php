@@ -31,7 +31,7 @@ class ServiceAppointmentListResource extends JsonResource
     private function getAvailableHours(): array
     {
         $currentDay = Day::getDayOfTheWeek(now()->dayOfWeekIso);
-        $openHours = $this->company->open_hours[$currentDay->value] ?? [];
+        $openHours = $this->category->company->open_hours[$currentDay->value] ?? [];
 
         if (empty($openHours)) {
             return [];
@@ -83,7 +83,7 @@ class ServiceAppointmentListResource extends JsonResource
     private function getOpenDays(): array
     {
         $openDay = today();
-        $openHours = $this->company->open_hours ?? [];
+        $openHours = $this->category->company->open_hours ?? [];
 
         if (empty($openHours)) {
             return [];

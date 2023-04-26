@@ -16,7 +16,6 @@ class ServiceSeeder extends Seeder
         $services = [];
         foreach ($companyCategories as $companyCategory) {
             $serviceModels = Service::factory()
-                ->withCompany($companyCategory->company_id)
                 ->withCategory($companyCategory->getKey())
                 ->count(random_int(2, 5))
                 ->make();

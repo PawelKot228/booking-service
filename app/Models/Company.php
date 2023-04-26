@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Company extends Model
 {
@@ -57,9 +58,9 @@ class Company extends Model
         return $this->hasMany(CompanyCategory::class);
     }
 
-    public function services(): HasMany
+    public function services(): HasManyThrough
     {
-        return $this->hasMany(Service::class);
+        return $this->hasManyThrough(Service::class, CompanyCategory::class);
     }
 
     public function getFormattedStreet(): string

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Service extends Model
 {
@@ -24,9 +25,9 @@ class Service extends Model
         return $this->hasMany(Appointment::class);
     }
 
-    public function company(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(CompanyCategory::class, 'company_category_id', 'id');
     }
 
     public function promotionServices(): HasMany

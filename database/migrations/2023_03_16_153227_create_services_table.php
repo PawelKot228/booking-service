@@ -10,7 +10,6 @@ return new class extends Migration {
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('company_category_id')->nullable()->constrained()->cascadeOnUpdate();
             $table->string('name');
             $table->text('description')->nullable();
@@ -24,7 +23,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('company_id');
             $table->dropConstrainedForeignId('company_category_id');
         });
 

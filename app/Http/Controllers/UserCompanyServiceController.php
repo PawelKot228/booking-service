@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyServiceRequest;
 use App\Models\Company;
-use App\Models\CompanyCategory;
 use App\Models\Service;
+use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class UserCompanyServiceController extends Controller
 {
@@ -30,19 +29,17 @@ class UserCompanyServiceController extends Controller
         $companyCategory = $company->categories()->findOrFail($companyCategory);
 
         try {
-            $service = $companyCategory->services()->make($request->validated());
-            $service->company_id = $company->id;
-            $service->save();
+            $service = $companyCategory->services()->create($request->validated());
 
             flashSuccessNotification(__('Successfully created!'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             logError($exception);
             flashSuccessNotification(__('Unexpected error occurred'));
 
             return redirect()->back();
         }
 
-        return to_route('companies.services.appointments.edit', [$company, $companyCategory, $service]);
+        return to_route('users.companies.categories.services.edit', [$company, $companyCategory, $service]);
     }
 
     public function show(Service $service)
@@ -57,11 +54,41 @@ class UserCompanyServiceController extends Controller
         return view('pages.users.companies.services.edit', compact('company', 'companyCategory', 'service'));
     }
 
-    public function update(CompanyServiceRequest $request, Company $company, $companyCategory, $service)
+    public function update(CompanyServiceRequest $request, Company $company, $companyCategory, $service): RedirectResponse
     {
+        try {
+            $companyCategory = $company->categories()->findOrFail($companyCategory);
+            $service = $companyCategory->services()->findOrFail($service);
+
+            $service->fill($request->validated())->save();
+
+            flashSuccessNotification(__('Successfully created!'));
+        } catch (Exception $exception) {
+            logError($exception);
+            flashSuccessNotification(__('Unexpected error occurred'));
+
+            return redirect()->back();
+        }
+
+        return to_route('users.companies.categories.services.edit', [$company, $companyCategory, $service]);
     }
 
-    public function destroy(Company $company, $companyCategory, $service)
+    public function destroy(Company $company, $companyCategory, $service): RedirectResponse
     {
+        try {
+            $companyCategory = $company->categories()->findOrFail($companyCategory);
+            $service = $companyCategory->services()->findOrFail($service);
+
+            $service->delete();
+
+            flashSuccessNotification(__('Successfully created!'));
+        } catch (Exception $exception) {
+            logError($exception);
+            flashSuccessNotification(__('Unexpected error occurred'));
+
+            return redirect()->back();
+        }
+
+        return to_route('users.companies.categories.services.index', [$company, $companyCategory]);
     }
 }

@@ -29,13 +29,13 @@ class UserAppointmentController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        $service = Service::findOrFail($request->service_id);
+        $service = Service::with(['category'])->findOrFail($request->service_id);
 
         $from = Carbon::parse($request->from);
 
         $appointment = $user->appointments()->create([
             ...$request->toArray(),
-            'company_id' => $service->company_id,
+            'company_id' => $service->category->company_id,
             'to' => $from->addMinutes($service->duration),
             'price' => $service->price,
         ]);

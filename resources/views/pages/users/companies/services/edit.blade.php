@@ -13,7 +13,7 @@
                 </x-leading-text-header>
 
                 <x-service.form
-                    :action="route('users.companies.categories.services.store', [$company, $companyCategory])"
+                    :action="route('users.companies.categories.services.update', [$company, $companyCategory, $service])"
                     :company="$company" :company-category="$companyCategory" :service="$service"
                     :update="true"
                 />

@@ -24,15 +24,6 @@ class ServiceFactory extends Factory
         ];
     }
 
-    public function withCompany(Company|int|null $company): static
-    {
-        $company ??= Company::factory();
-
-        return $this->state(fn(array $attributes) => [
-            'company_id' => $company,
-        ]);
-    }
-
     public function withCategory(CompanyCategory|int|null $companyCategory): static
     {
         $companyCategory ??= Company::factory();

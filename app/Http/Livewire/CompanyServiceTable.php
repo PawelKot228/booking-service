@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -11,7 +12,6 @@ class CompanyServiceTable extends DataTableComponent
 {
     public int $companyId;
     public int $companyCategoryId;
-
 
     public function configure(): void
     {
@@ -21,8 +21,12 @@ class CompanyServiceTable extends DataTableComponent
     public function builder(): Builder
     {
         return Service::query()
-            ->where('company_id', $this->companyId)
-            ->where('company_category_id', $this->companyCategoryId);
+            ->where('company_category_id', $this->companyCategoryId)
+            ->join('company_categories', function (JoinClause $join) {
+                $join->on('services.company_category_id', '=', 'company_categories.id');
+                $join->where('company_categories.company_id', $this->companyId);
+            })
+            ->groupBy('services.id');
     }
 
     public function columns(): array
