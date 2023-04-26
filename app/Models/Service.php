@@ -15,6 +15,8 @@ class Service extends Model
         'name',
         'description',
         'price',
+        'duration',
+        'currency',
     ];
 
     public function appointments(): HasMany

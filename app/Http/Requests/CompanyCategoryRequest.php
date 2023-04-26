@@ -13,7 +13,7 @@ class CompanyCategoryRequest extends FormRequest
             'category' => ['required'],
             'subcategory' => ['required'],
             'name' => ['required'],
-            'description' => ['nullable'],
+            'description' => ['sometimes', 'nullable'],
         ];
     }
 }

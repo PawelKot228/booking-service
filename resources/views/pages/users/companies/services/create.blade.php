@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $company->name }} - {{ __('Create category') }}
+            {{ $company->name }} - {{ __('Create service') }}
         </h2>
     </x-slot>
 
@@ -12,8 +12,8 @@
                     {{ __('Create') }}
                 </x-leading-text-header>
 
-                <x-category.form :action="route('users.companies.categories.store', [$company])"
-                    :company="$company"
+                <x-service.form :action="route('users.companies.categories.services.store', [$company, $companyCategory])"
+                    :company="$company" :company-category="$companyCategory"
                 />
             </div>
         </div>

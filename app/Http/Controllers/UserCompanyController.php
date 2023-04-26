@@ -29,8 +29,8 @@ class UserCompanyController extends Controller
             $company = $user->ownedCompanies()->create($request->validated());
             flashSuccessNotification(__('Successfully created a company!'));
         } catch (\Exception $exception) {
-            \Log::error("{$exception->getMessage()} - {$exception->getFile()}@{$exception->getLine()}");
-            flashErrorNotification(__('Could not create a company'));
+            logError($exception);
+            flashErrorNotification(__('Unexpected error occurred'));
 
             return redirect()->back();
         }

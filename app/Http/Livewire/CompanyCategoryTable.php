@@ -25,15 +25,31 @@ class CompanyCategoryTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
-                ->sortable(),
+            Column::make(__('Actions'), 'id')
+                ->format(fn (int $id) => view('components.datatable.actions')
+                    ->with('actions', [
+                        'edit' => route(
+                            'users.companies.categories.edit',
+                            ['company' => $this->companyId, 'category' => $id]
+                        ),
+                        'services' => route(
+                            'users.companies.categories.services.index',
+                            ['company' => $this->companyId, 'category' => $id]
+                        ),
+                        'delete' => route(
+                            'users.companies.categories.destroy',
+                            ['company' => $this->companyId, 'category' => $id]
+                        ),
+                    ])
+                ),
+
+            //Column::make("Id", "id")
+            //    ->sortable(),
             Column::make("Name", "name")
                 ->sortable(),
             Column::make("Description", "description")
                 ->sortable(),
             Column::make("Created at", "created_at")
-                ->sortable(),
-            Column::make("Updated at", "updated_at")
                 ->sortable(),
         ];
     }

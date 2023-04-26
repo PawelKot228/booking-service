@@ -29,7 +29,8 @@
     },
     "autoload": {
         "files": [
-          "app/Helpers/notifications.php"
+          "app/Helpers/notifications.php",
+          "app/Helpers/log.php"
         ],
         "psr-4": {
             "App\\": "app/",
