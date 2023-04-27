@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('type')->default('employee');
+            $table->timestamps();
         });
     }
 

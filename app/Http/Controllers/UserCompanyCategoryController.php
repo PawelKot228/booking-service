@@ -14,6 +14,11 @@ class UserCompanyCategoryController extends Controller
         return view('pages.users.companies.categories.index', compact('company'));
     }
 
+    public function create(Company $company)
+    {
+        return view('pages.users.companies.categories.create', compact('company'));
+    }
+
     public function store(CompanyCategoryRequest $request, Company $company): RedirectResponse
     {
         try {
@@ -27,11 +32,6 @@ class UserCompanyCategoryController extends Controller
         }
 
         return to_route('users.companies.categories.edit', [$company, $companyCategory]);
-    }
-
-    public function create(Company $company)
-    {
-        return view('pages.users.companies.categories.create', compact('company'));
     }
 
     public function show(CompanyCategory $companyCategory)

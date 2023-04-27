@@ -20,7 +20,6 @@ class CompanyEmployeeTable extends DataTableComponent
     public function builder(): Builder
     {
         return User::query()
-            ->groupBy('users.id')
             ->join('company_user', function (JoinClause $joinClause) {
                 $joinClause->on('company_user.user_id', '=', 'users.id');
                 $joinClause->where('company_user.company_id', $this->companyId);
@@ -49,7 +48,7 @@ class CompanyEmployeeTable extends DataTableComponent
             Column::make(__('Email'), 'email')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Created at'), 'created_at')
+            Column::make(__('Added at'), 'role.created_at')
                 ->sortable(),
         ];
     }

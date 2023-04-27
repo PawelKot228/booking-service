@@ -68,5 +68,8 @@
     "thursday": "Thursday",
     "friday": "Friday",
     "saturday": "Saturday",
-    "sunday": "Sunday"
+    "sunday": "Sunday",
+    "employee": "Employee",
+    "manager": "Manager",
+    "co_owner": "Co-Owner"
 }

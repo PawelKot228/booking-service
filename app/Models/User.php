@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -58,8 +60,13 @@ class User extends Authenticatable
         return $this->hasMany(Company::class);
     }
 
-    public function employerCompanies(): HasManyThrough
+    public function employerCompany(): HasOneThrough
     {
-        return $this->hasManyThrough(Company::class, CompanyUser::class);
+        return $this->hasOneThrough(Company::class, CompanyUser::class);
+    }
+
+    public function role(): HasOne
+    {
+        return $this->hasOne(CompanyUser::class);
     }
 }

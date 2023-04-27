@@ -11,4 +11,9 @@ class CompanyUser extends Pivot
         'user_id',
         'type',
     ];
+
+    public $timestamps = [
+        'created_at',
+        'updated_at',
+    ];
 }

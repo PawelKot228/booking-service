@@ -43,6 +43,11 @@ class Company extends Model
         return $this->belongsToMany(User::class, CompanyUser::class);
     }
 
+    public function employeesPivot(): HasMany
+    {
+        return $this->hasMany(CompanyUser::class);
+    }
+
     public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class);
