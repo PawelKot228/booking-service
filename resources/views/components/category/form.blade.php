@@ -18,21 +18,50 @@
              x-data="categorySelect()"
         >
             <div class="p-2">
-                <x-label for="service_id" value="{{ __('Service') }}"/>
-                <livewire:company.appointment.service-select companyId="{{ $company->id }}" />
-                <x-input-error for="service_id" class="mt-2"/>
-            </div>
-            <div class="p-2">
-                <x-label for="day" value="{{ __('Day') }}"/>
-                <livewire:company.appointment.day-select companyId="{{ $company->id }}" />
-                <x-input-error for="day" class="mt-2"/>
-            </div>
-            <div class="p-2">
-                <x-label for="hour" value="{{ __('Hour') }}"/>
-                <livewire:company.appointment.hour-select companyId="{{ $company->id }}" />
-                <x-input-error for="hour" class="mt-2"/>
-            </div>
+                <x-label for="category" value="{{ __('Category') }}"/>
+                <x-select id="category" name="category" type="text" class="mt-1 block w-full"
+                          autofocus required
+                          x-on:change="selectedCategory()"
+                >
+                    {{--                                    <option selected>{{ __('Choose a category') }}</option>--}}
 
+                    @foreach(\App\Enums\ServiceCategory::cases() as $category)
+                        <option {{ in_array($category->value, [old('category'), $companyCategory?->category]) ? 'selected' : '' }}
+                                value="{{ $category->value }}"
+                        >
+                            {{ __($category->value) }}
+                        </option>
+                    @endforeach
+                </x-select>
+                <x-input-error for="category" class="mt-2"/>
+            </div>
+            <div class="p-2">
+                <x-label for="subcategory" value="{{ __('Subcategory') }}"/>
+                <x-select id="subcategory" name="subcategory" type="text" class="mt-1 block w-full"
+                          autofocus required
+                          @change="selectedSubcategory()"
+                >
+                    {{--                                    <option selected>{{ __('Choose a subcategory') }}</option>--}}
+
+
+                    @foreach(\App\Enums\ServiceCategory::cases() as $category)
+                        <optgroup label="{{ __($category->value) }}"
+                                  data-category="{{ $category->value }}">
+
+                            @foreach(\App\Enums\ServiceCategory::getSubcategories($category) as $subcategory)
+                                <option
+                                    {{ in_array($subcategory->value, [old('subcategory'), $companyCategory?->subcategory]) ? 'selected' : '' }}
+                                    value="{{ $subcategory->value }}"
+                                >
+                                    {{ __($subcategory->value) }}
+                                </option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+
+                </x-select>
+                <x-input-error for="category" class="mt-2"/>
+            </div>
             <div class="p-2">
                 <x-label for="name" value="{{ __('Name') }}"/>
                 <x-input id="name" name="name" type="text" class="mt-1 block w-full"

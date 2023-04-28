@@ -12,7 +12,7 @@
                     {{ __('Create') }}
                 </x-leading-text-header>
 
-                <x-category.form :action="route('users.companies.appointments.store', [$company])"
+                <x-appointment.form :action="route('users.companies.appointments.store', [$company])"
                     :company="$company"
                 />
             </div>
