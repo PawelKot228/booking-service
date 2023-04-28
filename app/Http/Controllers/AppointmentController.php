@@ -20,13 +20,13 @@ class AppointmentController extends Controller
         $date = Carbon::parse($request->date);
 
         $service = Service::with([
-            'category.company',
+            'company',
             'appointments' => fn(HasMany $query) => $query->where(
                 fn(Builder $query) => $query->whereDate('from', '>=', $date->startOfDay())
                     ->whereDate('to', '<=', $date->endOfDay())
             ),
         ])
-            ->has('category.company')
+            ->has('company')
             ->findOrFail($service);
 
         return response()->json((new ServiceAppointmentListResource($service)));

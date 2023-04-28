@@ -60,7 +60,9 @@ class UserCompanyServiceController extends Controller
             $companyCategory = $company->categories()->findOrFail($companyCategory);
             $service = $companyCategory->services()->findOrFail($service);
 
-            $service->fill($request->validated())->save();
+            $service->fill(
+                $request->validated()
+            )->save();
 
             flashSuccessNotification(__('Successfully created!'));
         } catch (Exception $exception) {

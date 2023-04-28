@@ -49,7 +49,9 @@ class UserCompanyCategoryController extends Controller
     {
         try {
             $companyCategory = $company->categories()->findOrFail($companyCategory);
-            $companyCategory->fill($request->validated())->save();
+            $companyCategory->fill(
+                $request->validated()
+            )->save();
 
             flashSuccessNotification(__('Successfully updated!'));
         } catch (\Exception $exception) {

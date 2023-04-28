@@ -9,17 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <x-leading-text-header>
-                    {{ __('Appointments') }}
-
-                    <x-slot name="buttons">
-                        <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
-                            {{ __('Add Appointment') }}
-                        </x-button-link>
-                    </x-slot>
+                    {{ __('Edit') }}
                 </x-leading-text-header>
 
-                <livewire:company-appointment-table companyId="{{ $company->id }}" />
+                <x-category.form :action="route('users.companies.appointments.update', [$company, $appointment])"
+                                 :company="$company" :appointment="$appointment"
+                                 :update="true"
+                />
             </div>
         </div>
     </div>
+
 </x-app-layout>

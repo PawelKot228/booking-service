@@ -30,6 +30,18 @@ class Service extends Model
         return $this->belongsTo(CompanyCategory::class, 'company_category_id', 'id');
     }
 
+    public function company(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Company::class,
+            CompanyCategory::class,
+            'id',
+            'id',
+            'company_category_id',
+            'company_id'
+        );
+    }
+
     public function promotionServices(): HasMany
     {
         return $this->hasMany(ServicePromotion::class);

@@ -10,15 +10,14 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <x-leading-text-header>
                     {{ __('Services') }}
+
+                    <x-slot name="buttons">
+                        <x-button-link href="{{ route('users.companies.categories.services.create', [$company, $companyCategory]) }}">
+                            {{ __('Add Service') }}
+                        </x-button-link>
+                    </x-slot>
                 </x-leading-text-header>
 
-                <div class="text-right mb-2">
-                    <x-button-link
-                        href="{{ route('users.companies.categories.services.create', [$company, $companyCategory]) }}"
-                    >
-                        {{ __('Add Service') }}
-                    </x-button-link>
-                </div>
                 <livewire:company-service-table
                     companyId="{{ $company->id }}"
                     companyCategoryId="{{ $companyCategory->id }}"
