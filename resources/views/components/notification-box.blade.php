@@ -2,7 +2,7 @@
     id="notificationsBox"
     x-cloak
     x-data="notificationsHandler()"
-    class="fixed inset-0 flex flex-col-reverse items-end justify-end h-screen w-screen pointer-events-none"
+    class="fixed inset-0 flex flex-col-reverse items-end justify-start h-screen w-screen pointer-events-none"
     @notification.window="add($event.detail)"
 >
     <template x-for="notification of notifications" :key="notification.id">
@@ -17,6 +17,7 @@
             @click="remove(notification.id)"
             class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
             role="alert"
+            style="pointer-events: all"
 
 
         >
@@ -50,8 +51,6 @@
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span class="sr-only">{{ __('Error icon') }}</span>
                 </template>
-
-
             </div>
 
 
@@ -61,7 +60,6 @@
 
             <button type="button"
                     class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-                    {{--                    data-dismiss-target="#toast-danger" --}}
                     aria-label="Close"
             >
                 <span class="sr-only">{{ __('Close') }}</span>
@@ -84,14 +82,13 @@
                 notifications: [],
                 visible: [],
                 add(notification) {
-                    console.log((Math.random() + 1).toString(36))
                     notification.id = (Math.random() + 1).toString(36)
                     this.notifications.push(notification)
                     this.fire(notification.id)
                 },
                 fire(id) {
                     this.visible.push(this.notifications.find(notification => notification.id === id))
-                    const timeShown = 2000 * this.visible.length
+                    const timeShown = 2500 * this.visible.length
 
                     setTimeout(() => {
                         this.remove(id)
@@ -104,7 +101,7 @@
                 },
                 init() {
                     let sessionNotifications = {!! json_encode(session('notifications', [])) !!};
-console.log(sessionNotifications)
+
                     for (const [type, messages] of Object.entries(sessionNotifications)) {
                         for (const message of messages) {
                             this.add({type: type, text: message});

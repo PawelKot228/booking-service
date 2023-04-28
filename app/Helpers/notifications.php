@@ -34,8 +34,8 @@ if (!function_exists('flashNotification')) {
     function flashNotification(NotificationType $type, string $message): void
     {
         $messages = session('notifications') ?? [];
-        $messages[] = $messages;
+        $messages[$type->value][] = $message;
 
-        session()->flash('notifications', [$messages]);
+        session()->flash('notifications', $messages);
     }
 }

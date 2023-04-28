@@ -45,10 +45,12 @@ class UserCompanyCategoryController extends Controller
         return view('pages.users.companies.categories.edit', compact('company', 'companyCategory'));
     }
 
-    public function update(CompanyCategoryRequest $request, $company, CompanyCategory $companyCategory): RedirectResponse
+    public function update(CompanyCategoryRequest $request, Company $company, $companyCategory): RedirectResponse
     {
         try {
+            $companyCategory = $company->categories()->findOrFail($companyCategory);
             $companyCategory->fill($request->validated())->save();
+
             flashSuccessNotification(__('Successfully updated!'));
         } catch (\Exception $exception) {
             logError($exception);
