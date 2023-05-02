@@ -5,14 +5,14 @@ namespace App\Http\Resources;
 use App\Actions\Company\Service\GetServiceAvailableDays;
 use App\Actions\Company\Service\GetServiceAvailableHours;
 use App\Enums\Day;
-use App\Http\Requests\AvailableAppointmentsRequest;
+use App\Http\Requests\AvailableAppointmentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin \App\Models\Service */
 class ServiceAppointmentListResource extends JsonResource
 {
-    public function toArray(AvailableAppointmentsRequest|Request $request): array
+    public function toArray(AvailableAppointmentRequest|Request $request): array
     {
         return [
             'id' => $this->id,

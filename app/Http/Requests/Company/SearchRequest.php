@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanySearchRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     public function rules(): array
     {

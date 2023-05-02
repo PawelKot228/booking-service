@@ -62,7 +62,14 @@ class User extends Authenticatable
 
     public function employerCompany(): HasOneThrough
     {
-        return $this->hasOneThrough(Company::class, CompanyUser::class);
+        return $this->hasOneThrough(
+            Company::class,
+            CompanyUser::class,
+            'company_user.user_id',
+            'companies.id',
+            'users.id',
+            'company_user.company_id'
+        );
     }
 
     public function role(): HasOne

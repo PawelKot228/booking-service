@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AvailableAppointmentsRequest;
+use App\Http\Requests\AvailableAppointmentRequest;
 use App\Http\Resources\ServiceAppointmentListResource;
 use App\Models\Appointment;
 use App\Models\Service;
@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
-    public function availableList(AvailableAppointmentsRequest $request, $company, $service): JsonResponse
+    public function availableList(AvailableAppointmentRequest $request, $company, $service): JsonResponse
     {
         $date = Carbon::parse($request->date);
 

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
-use App\Enums\Day;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyStoreRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     public function rules(): array
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Company\Appointment;
+namespace App\Http\Livewire\Select\Appointment;
 
 use App\Models\CompanyCategory;
 use Livewire\Component;
 
-class ServiceSelect extends Component
+class Service extends Component
 {
     public int $companyId;
     public ?int $serviceId = null;
@@ -21,6 +21,6 @@ class ServiceSelect extends Component
             ->where('company_id', $this->companyId)
             ->get();
 
-        return view('livewire.company.appointment.service-select', compact('categories'));
+        return view('livewire.select.appointment.service', compact('categories'));
     }
 }

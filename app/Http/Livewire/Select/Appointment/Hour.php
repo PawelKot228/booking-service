@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Company\Appointment;
+namespace App\Http\Livewire\Select\Appointment;
 
 use App\Actions\Company\Service\GetServiceAvailableHours;
 use App\Models\Service;
 use Livewire\Component;
 
-class HourSelect extends Component
+class Hour extends Component
 {
     protected $listeners = ['dayChanged' => 'change'];
 
@@ -22,6 +22,6 @@ class HourSelect extends Component
 
     public function render()
     {
-        return view('livewire.company.appointment.hour-select');
+        return view('livewire.select.appointment.hour');
     }
 }

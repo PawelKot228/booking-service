@@ -13,9 +13,4 @@ class UserAppointmentStoreRequest extends FormRequest
             'from' => ['required', 'date_format:Y-m-d H:i:s'],
         ];
     }
-
-    public function authorize(): bool
-    {
-        return true;
-    }
 }

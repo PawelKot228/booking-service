@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmployeeStoreRequest;
-use App\Http\Requests\EmployeeUpdateRequest;
+use App\Http\Requests\Company\EmployeeStoreRequest;
+use App\Http\Requests\Company\EmployeeUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

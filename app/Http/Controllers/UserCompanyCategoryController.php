@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CompanyCategoryRequest;
+use App\Http\Requests\Company\CategoryRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +19,7 @@ class UserCompanyCategoryController extends Controller
         return view('pages.users.companies.categories.create', compact('company'));
     }
 
-    public function store(CompanyCategoryRequest $request, Company $company): RedirectResponse
+    public function store(CategoryRequest $request, Company $company): RedirectResponse
     {
         try {
             $companyCategory = $company->categories()->create($request->validated());
@@ -45,7 +45,7 @@ class UserCompanyCategoryController extends Controller
         return view('pages.users.companies.categories.edit', compact('company', 'companyCategory'));
     }
 
-    public function update(CompanyCategoryRequest $request, Company $company, $companyCategory): RedirectResponse
+    public function update(CategoryRequest $request, Company $company, $companyCategory): RedirectResponse
     {
         try {
             $companyCategory = $company->categories()->findOrFail($companyCategory);

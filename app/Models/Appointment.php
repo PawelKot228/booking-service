@@ -12,10 +12,12 @@ class Appointment extends Model
     protected $fillable = [
         'company_id',
         'service_id',
+        'user_id',
         'from',
         'to',
         'status',
         'price',
+        'currency',
     ];
 
     protected $casts = [

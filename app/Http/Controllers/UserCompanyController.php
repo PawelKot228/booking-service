@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CompanyStoreRequest;
+use App\Http\Requests\Company\StoreRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +20,7 @@ class UserCompanyController extends Controller
         return view('pages.users.companies.create');
     }
 
-    public function store(CompanyStoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
         /** @var User $user */
         $user = auth()->user();

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AvailableAppointmentsRequest extends FormRequest
+class AvailableAppointmentRequest extends FormRequest
 {
     public function rules(): array
     {

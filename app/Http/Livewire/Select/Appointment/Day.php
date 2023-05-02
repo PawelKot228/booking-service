@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Company\Appointment;
+namespace App\Http\Livewire\Select\Appointment;
 
 use App\Actions\Company\Service\GetServiceAvailableDays;
-use App\Models\Company;
 use App\Models\Service;
 use Livewire\Component;
 
-class DaySelect extends Component
+class Day extends Component
 {
     protected $listeners = ['serviceChanged' => 'change'];
 
@@ -36,6 +35,6 @@ class DaySelect extends Component
 
     public function render()
     {
-        return view('livewire.company.appointment.day-select');
+        return view('livewire.select.appointment.day');
     }
 }

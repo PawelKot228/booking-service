@@ -3,14 +3,14 @@
 namespace App\Actions\Company;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CompanySearchRequest;
+use App\Http\Requests\Company\SearchRequest;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 
 class FetchCompaniesList extends Controller
 {
-    public function handle(Builder $query, CompanySearchRequest $request): Builder
+    public function handle(Builder $query, SearchRequest $request): Builder
     {
         $query->select([
             'companies.*',

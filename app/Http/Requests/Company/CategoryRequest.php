@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyCategoryRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     public function rules(): array
     {

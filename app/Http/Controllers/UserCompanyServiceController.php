@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CompanyServiceRequest;
+use App\Http\Requests\Company\ServiceRequest;
 use App\Models\Company;
 use App\Models\Service;
 use Exception;
@@ -24,7 +24,7 @@ class UserCompanyServiceController extends Controller
         return view('pages.users.companies.services.create', compact('company', 'companyCategory'));
     }
 
-    public function store(CompanyServiceRequest $request, Company $company, $companyCategory): RedirectResponse
+    public function store(ServiceRequest $request, Company $company, $companyCategory): RedirectResponse
     {
         $companyCategory = $company->categories()->findOrFail($companyCategory);
 
@@ -54,7 +54,7 @@ class UserCompanyServiceController extends Controller
         return view('pages.users.companies.services.edit', compact('company', 'companyCategory', 'service'));
     }
 
-    public function update(CompanyServiceRequest $request, Company $company, $companyCategory, $service): RedirectResponse
+    public function update(ServiceRequest $request, Company $company, $companyCategory, $service): RedirectResponse
     {
         try {
             $companyCategory = $company->categories()->findOrFail($companyCategory);
