@@ -5,21 +5,19 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <x-leading-text-header>
-                    {{ __('Appointments') }}
+    {{ Breadcrumbs::renderCompany($company) }}
 
-                    <x-slot name="buttons">
-                        <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
-                            {{ __('Add Appointment') }}
-                        </x-button-link>
-                    </x-slot>
-                </x-leading-text-header>
+    <x-page-body>
+        <x-leading-text-header>
+            {{ __('Appointments') }}
 
-                <livewire:company-appointment-table companyId="{{ $company->id }}" />
-            </div>
-        </div>
-    </div>
+            <x-slot name="buttons">
+                <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
+                    {{ __('Add Appointment') }}
+                </x-button-link>
+            </x-slot>
+        </x-leading-text-header>
+
+        <livewire:company-appointment-table companyId="{{ $company->id }}" />
+    </x-page-body>
 </x-app-layout>

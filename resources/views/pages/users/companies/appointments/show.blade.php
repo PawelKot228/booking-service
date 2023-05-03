@@ -5,17 +5,13 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <x-leading-text-header>
-                    {{ __('Show') }}
-                </x-leading-text-header>
+    {{ Breadcrumbs::renderCompany($appointment, $company) }}
 
-                @dump($appointment)
+    <x-page-body>
+        <x-leading-text-header>
+            {{ __('Show') }}
+        </x-leading-text-header>
 
-            </div>
-        </div>
-    </div>
-
+        @dump($appointment)
+    </x-page-body>
 </x-app-layout>
