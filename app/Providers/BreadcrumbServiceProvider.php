@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Appointment;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Illuminate\Database\Eloquent\Model;
@@ -45,7 +46,12 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $trail->parent("$name.index", ...$models);
                 }
 
-                $trail->push($model->name, route("users.$name.show", [$model, ...$models]));
+                $title = $model->name;
+                if ($model instanceof Appointment) {
+                    $title = $model->customer->name;
+                }
+
+                $trail->push($title, route("users.$name.show", [$model, ...$models]));
             });
 
             Breadcrumbs::for("$name.edit", function (BreadcrumbTrail $trail, Model $model, Model ...$models) use ($name) {
