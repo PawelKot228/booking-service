@@ -3,8 +3,9 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import focus from '@alpinejs/focus';
 import {Loader} from "@googlemaps/js-api-loader"
-import 'flowbite';
 import dayjs from "dayjs";
+import 'flowbite';
+import 'boxicons';
 
 window.Alpine = Alpine;
 window.dayjs = dayjs;

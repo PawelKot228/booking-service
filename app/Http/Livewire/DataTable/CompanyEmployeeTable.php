@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\DataTable;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,6 +10,8 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class CompanyEmployeeTable extends DataTableComponent
 {
+    use HasTooltips;
+
     public int $companyId;
 
     public function configure(): void

@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\DataTable;
 
 use App\Enums\AppointmentStatus;
-use App\Models\Service;
+use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Appointment;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class CompanyAppointmentTable extends DataTableComponent
 {
+    use HasTooltips;
+
     public int $companyId;
 
     public function configure(): void

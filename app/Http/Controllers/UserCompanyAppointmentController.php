@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppointmentStatus;
 use App\Http\Requests\Company\AppointmentStoreRequest;
 use App\Models\Company;
 use App\Models\Service;
@@ -33,10 +34,10 @@ class UserCompanyAppointmentController extends Controller
             $service = Service::findOrFail($request->service_id);
 
             $fromDate = Carbon::parse("$request->day $request->hour");
-
             $appointment = $company->appointments()->create([
                 ...$request->validated(),
                 'user_id' => $user->id,
+                'status' => AppointmentStatus::ACCEPTED,
                 'price' => $service->price,
                 'currency' => $service->currency,
                 'from' => $fromDate,

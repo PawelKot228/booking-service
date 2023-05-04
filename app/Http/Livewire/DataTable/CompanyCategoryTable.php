@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\DataTable;
 
 use App\Models\CompanyCategory;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,11 +9,14 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class CompanyCategoryTable extends DataTableComponent
 {
+    use HasTooltips;
+
     public int $companyId;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+
     }
 
     public function builder(): Builder
@@ -32,10 +35,13 @@ class CompanyCategoryTable extends DataTableComponent
                             'users.companies.categories.edit',
                             ['company' => $this->companyId, 'category' => $id]
                         ),
-                        'services' => route(
-                            'users.companies.categories.services.index',
-                            ['company' => $this->companyId, 'category' => $id]
-                        ),
+                        'services' => [
+                            'icon' => 'carousel',
+                            'url' => route(
+                                'users.companies.categories.services.index',
+                                ['company' => $this->companyId, 'category' => $id]
+                            )
+                        ],
                         'delete' => route(
                             'users.companies.categories.destroy',
                             ['company' => $this->companyId, 'category' => $id]
@@ -43,8 +49,6 @@ class CompanyCategoryTable extends DataTableComponent
                     ])
                 ),
 
-            //Column::make("Id", "id")
-            //    ->sortable(),
             Column::make("Name", "name")
                 ->sortable(),
             Column::make("Description", "description")
