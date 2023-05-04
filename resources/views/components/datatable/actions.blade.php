@@ -2,7 +2,7 @@
     'actions' => [],
 ])
 
-<div class="flex gap-0.5 flex-wrap items-center fill-white min-w-[180px]">
+<div class="flex gap-0.5 flex-wrap items-center min-w-[180px]">
     @foreach($actions as $action => $details)
         @php
             $url = $details;
@@ -20,8 +20,7 @@
                data-tooltip-target="tooltip-edit"
                href="{{ $url }}"
             >
-                <box-icon
-                    name='edit'>
+                <box-icon name='edit' class="fill-white">
                 </box-icon>
             </a>
         @elseif($action === 'delete')
@@ -34,7 +33,7 @@
                     data-tooltip-target="tooltip-delete"
                     type="submit"
                 >
-                    <box-icon name='trash'></box-icon>
+                    <box-icon name='trash' class="fill-white"></box-icon>
                 </button>
             </form>
         @else
@@ -44,7 +43,7 @@
 
             >
                 @if($icon)
-                    <box-icon name='{{ $icon }}'></box-icon>
+                    <box-icon name='{{ $icon }}' class="fill-white"></box-icon>
                 @endif
 
                 @if($title)
