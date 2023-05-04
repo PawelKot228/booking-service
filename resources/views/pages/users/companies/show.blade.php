@@ -31,7 +31,7 @@
                 </x-slot>
 
 
-                 {{ __('Get a quick overview of our team. Click here to access a simple table displaying our employees and their roles. Discover who\'s who in our company with ease.') }}
+                {{ __('Get a quick overview of our team. Click here to access a simple table displaying our employees and their roles. Discover who\'s who in our company with ease.') }}
             </x-company.widget-card>
 
             <x-company.widget-card href="{{ route('users.companies.appointments.index', [$company]) }}">

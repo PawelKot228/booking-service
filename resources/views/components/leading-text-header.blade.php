@@ -1,5 +1,5 @@
 <div class="flex justify-between items-center">
-    <h2 class="font-semibold text-xl text-gray-800 leading-none">
+    <h2 class="font-semibold text-xl md:text-2xl lg:text-3xl text-gray-800 leading-none">
         {{ $slot }}
     </h2>
 
