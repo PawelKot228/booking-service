@@ -15,8 +15,8 @@ class ScheduleSelects extends Component
     public int $companyId;
     public ?int $serviceId = null;
 
-    public string $day;
-    public string $hour;
+    public $day;
+    public $hour;
 
     public bool $disabledServices = false;
 
@@ -25,6 +25,21 @@ class ScheduleSelects extends Component
     {
         $this->companyId = $companyId;
         $this->appointmentId = $appointmentId;
+    }
+
+    public function updatedServiceId($value)
+    {
+        $this->hour = $value['value'];
+    }
+
+    public function updatedDay($value)
+    {
+        $this->day = $value['value'];
+    }
+
+    public function updatedHour($value)
+    {
+        $this->hour = $value['value'];
     }
 
     public function render()
@@ -37,7 +52,6 @@ class ScheduleSelects extends Component
         if ($appointment) {
             $this->serviceId ??= $appointment->service_id;
             $this->disabledServices = true;
-
             $this->day ??= $appointment->from->format('Y-m-d');
             $this->hour ??= $appointment->from->format('H:i');
         }

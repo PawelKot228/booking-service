@@ -21,6 +21,7 @@
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.15.1",
         "boxicons": "^2.1.4",
+        "choices.js": "^10.2.0",
         "daisyui": "^2.51.5",
         "dayjs": "^1.11.7"
     }

@@ -6,6 +6,8 @@ import {Loader} from "@googlemaps/js-api-loader"
 import dayjs from "dayjs";
 import 'flowbite';
 import 'boxicons';
+import 'choices.js';
+import Choices from "choices.js";
 
 window.Alpine = Alpine;
 window.dayjs = dayjs;
@@ -45,3 +47,7 @@ if (googleMapsPlaceInput) {
         });
 }
 
+document.querySelectorAll('.choices-js')
+    .forEach(select => {
+        const choices = new Choices(select);
+    })

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "choices.js/public/assets/styles/choices.min.css";
+
 [x-cloak] {
     display: none !important;
 }

@@ -10,6 +10,6 @@
     }
 @endphp
 
-<select {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => "$classes text-sm rounded-lg  block w-full p-2.5"]) !!}>
+<select {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => "$classes choices-js text-sm rounded-lg  block w-full p-2.5"]) !!}>
     {{ $slot }}
 </select>

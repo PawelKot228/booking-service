@@ -4,6 +4,8 @@
         <x-select id="service_id" name="service_id" required
                   wire:model="serviceId"
                   disabled="{{ $disabledServices }}"
+                  wire:ignore
+                  wire:change="$set('service_id', $event.target.value['value'])"
         >
             <option value="" class="hidden"></option>
             @foreach($categories as $category)
@@ -23,7 +25,11 @@
     </div>
     <div class="p-2">
         <x-label for="day" value="{{ __('Day') }}"/>
-        <x-select id="day" name="day" required wire:model="day">
+        <x-select id="day" name="day" required
+                  wire:model="day"
+                  wire:ignore
+                  wire:change="$set('day', $event.target.value['value'])"
+        >
             <option value="" class="hidden"></option>
             @foreach($days as $day)
                 <option value="{{ $day }}">
@@ -35,10 +41,14 @@
     </div>
     <div class="p-2">
         <x-label for="hour" value="{{ __('Hour') }}"/>
-        <x-select id="hour" name="hour" required wire:model="hour">
+        <x-select id="hour" name="hour" required
+                  wire:model="hour"
+                  wire:ignore
+                  wire:change="$set('hour', $event.target.value['value'])"
+        >
             <option value="" class="hidden"></option>
             @foreach($hours as $hour)
-                <option value="{{ $hour['time'] }}" {{ $hour['available'] ? '' : 'disabled' }}>
+                <option value="{{ $hour['time'] }}" >
                     {{ $hour['time'] }}
                 </option>
             @endforeach
