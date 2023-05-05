@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AppointmentStatus;
+use App\Http\Requests\Company\AppointmentChangeStatusRequest;
 use App\Http\Requests\Company\AppointmentStoreRequest;
 use App\Models\Company;
 use App\Models\Service;
@@ -71,6 +72,38 @@ class UserCompanyAppointmentController extends Controller
 
     public function update(Request $request, Company $company, $appointment)
     {
+    }
+
+    public function changeStatus(AppointmentChangeStatusRequest $request, Company $company, $appointment)
+    {
+        $appointment = $company->appointments()->findOrFail($appointment);
+
+        if (
+            $appointment->status === AppointmentStatus::PENDING->value
+            && !in_array($request->status, [AppointmentStatus::ACCEPTED->value, AppointmentStatus::REJECTED->value])
+        ) {
+            flashErrorNotification(__('Cannot change Pending status, wrong status was given'));
+            return redirect()->back();
+        }
+
+        if (
+            $appointment->status === AppointmentStatus::ACCEPTED->value
+            && $request->status === AppointmentStatus::FINISHED->value
+        ) {
+            flashErrorNotification(__('Cannot change Accepted status, wrong status was given'));
+            return redirect()->back();
+        }
+
+        if ($request->status === AppointmentStatus::FINISHED->value && $appointment->to->greaterThan(now())) {
+            flashErrorNotification(__('Appointment can be finished after sheduled time passes'));
+            return redirect()->back();
+        }
+
+        $appointment->update(['status' => $request->status]);
+
+        flashSuccessNotification(__('Successfully changed status!'));
+
+        return redirect()->back();
     }
 
     public function destroy(Company $company, $appointment): RedirectResponse

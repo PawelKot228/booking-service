@@ -36,6 +36,7 @@ class CompanyCategoryTable extends DataTableComponent
                             ['company' => $this->companyId, 'category' => $id]
                         ),
                         'services' => [
+                            'tooltip' => 'services',
                             'icon' => 'carousel',
                             'url' => route(
                                 'users.companies.categories.services.index',

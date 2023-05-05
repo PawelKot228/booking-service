@@ -4,6 +4,7 @@ namespace App\Http\Livewire\DataTable;
 
 use App\Enums\AppointmentStatus;
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -71,24 +72,44 @@ class CompanyAppointmentTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Id", "id")
+            Column::make(__('Actions'), 'id')
+                ->format(fn(int $id) => view('components.datatable.actions')
+                    ->with('actions', [
+                        'show' => route(
+                            'users.companies.appointments.show',
+                            ['company' => $this->companyId, 'appointment' => $id]
+                        ),
+                        'edit' => route(
+                            'users.companies.appointments.edit',
+                            ['company' => $this->companyId, 'appointment' => $id]
+                        ),
+                    ])
+                ),
+
+            Column::make(__('Customer'), "customer.name")
                 ->sortable(),
-            Column::make("Company id", "company_id")
+            Column::make(__('Service'), "service.name")
                 ->sortable(),
-            Column::make("Service id", "service_id")
+            Column::make(__('Day'), "from")
+                ->format(fn(Carbon $from) => $from->isoFormat('D MMMM YYYY'))
                 ->sortable(),
-            Column::make("From", "from")
+            Column::make(__('From'), "from")
+                ->format(fn(Carbon $from) => $from->format('H:i'))
                 ->sortable(),
-            Column::make("To", "to")
+            Column::make(__('To'), "to")
+                ->format(fn(Carbon $to) => $to->format('H:i'))
                 ->sortable(),
-            Column::make("Status", "status")
+            Column::make(__('Status'), "status")
+                ->format(fn(int $status) => view('components.appointment.status-badge', ['status' => $status]))
                 ->sortable(),
-            Column::make("Price", "price")
+            Column::make(__('Price'), "price")
                 ->sortable(),
-            Column::make("Created at", "created_at")
+            Column::make(__('Currency'), "currency")
                 ->sortable(),
-            Column::make("Updated at", "updated_at")
-                ->sortable(),
+            //Column::make(__('Created at'), "created_at")
+            //    ->sortable(),
+            //Column::make(__('Updated at'), "updated_at")
+            //    ->sortable(),
         ];
     }
 }

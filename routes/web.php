@@ -39,10 +39,23 @@ Route::middleware([
             Route::resource('appointments', UserAppointmentController::class);
 
             Route::resource('companies', UserCompanyController::class);
-            Route::resource('companies.employees', UserCompanyEmployeeController::class);
-            Route::resource('companies.appointments', UserCompanyAppointmentController::class);
-            Route::resource('companies.categories', UserCompanyCategoryController::class);
-            Route::resource('companies.categories.services', UserCompanyServiceController::class);
+
+
+            Route::prefix('companies/{company}/')
+                ->name('companies.')
+                ->group(function () {
+                    Route::resource('employees', UserCompanyEmployeeController::class);
+                    Route::resource('appointments', UserCompanyAppointmentController::class);
+                    Route::resource('categories', UserCompanyCategoryController::class);
+                    Route::resource('categories.services', UserCompanyServiceController::class);
+
+                    Route::prefix('appointments/{appointment}/')
+                        ->name('appointments.')
+                        ->group(function () {
+                            Route::patch('/change-status', [UserCompanyAppointmentController::class, 'changeStatus'])
+                                ->name('change-status');
+                        });
+                });
         });
 });
 
