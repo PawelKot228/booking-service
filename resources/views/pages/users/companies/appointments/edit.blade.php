@@ -19,29 +19,39 @@
 
         <div class="flex flex-wrap my-4 gap-y-2">
             <div class="w-full sm:w-1/2 xl:w-1/3 px-4">
-                <x-simple-card>
-                    <x-slot:header>
-                        <h3 class="font-semibold text-xl">
-                            {{ __('Details') }}
-                        </h3>
-                    </x-slot:header>
+                <form action="{{ route('users.companies.appointments.update', [$company, $appointment]) }}"
+                    method="POST"
+                >
+                    @csrf
+                    @method('PATCH')
+                    <x-simple-card>
+                        <x-slot:header>
+                            <h3 class="font-semibold text-xl">
+                                {{ __('Details') }}
+                            </h3>
+                        </x-slot:header>
 
-                    <livewire:appointment.schedule-selects
-                        companyId="{{ $company->id }}"
-                        appointmentId="{{ $appointment->id }}"
-                    />
+                        <x-slot:buttons>
+                            <x-button-small>
+                                {{ __('Save') }}
+                            </x-button-small>
+                        </x-slot:buttons>
 
-                    <div class="p-2">
-                        <x-label for="employee_id" value="{{ __('Employee') }}"/>
-                        <livewire:select.company-employees
+                        <livewire:appointment.schedule-selects
                             companyId="{{ $company->id }}"
-                            appointmentEmployeeId="{{ $appointment->employeeId }}"
+                            appointmentId="{{ $appointment->id }}"
                         />
-                        <x-input-error for="employee_id" class="mt-2"/>
-                    </div>
 
-
-                </x-simple-card>
+                        <div class="p-2">
+                            <x-label for="employee_id" value="{{ __('Employee') }}"/>
+                            <livewire:select.company-employees
+                                companyId="{{ $company->id }}"
+                                appointmentEmployeeId="{{ $appointment->employee_id }}"
+                            />
+                            <x-input-error for="employee_id" class="mt-2"/>
+                        </div>
+                    </x-simple-card>
+                </form>
             </div>
             <div class="w-full sm:w-1/2 xl:w-1/3 px-4">
                 <x-appointment.card.base-info :appointment="$appointment"/>

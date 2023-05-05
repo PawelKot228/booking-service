@@ -1,7 +1,10 @@
 <div>
     <div class="p-2">
         <x-label for="service_id" value="{{ __('Service') }}"/>
-        <x-select id="service_id" name="service_id" required wire:model="serviceId">
+        <x-select id="service_id" name="service_id" required
+                  wire:model="serviceId"
+                  disabled="{{ $disabledServices }}"
+        >
             <option value="" class="hidden"></option>
             @foreach($categories as $category)
                 <optgroup label="{{ $category->name }}">

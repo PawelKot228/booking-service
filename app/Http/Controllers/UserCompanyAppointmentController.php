@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AppointmentStatus;
 use App\Http\Requests\Company\AppointmentChangeStatusRequest;
 use App\Http\Requests\Company\AppointmentStoreRequest;
+use App\Http\Requests\Company\AppointmentUpdateRequest;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\User;
@@ -12,7 +13,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class UserCompanyAppointmentController extends Controller
 {
@@ -70,11 +70,30 @@ class UserCompanyAppointmentController extends Controller
         return view('pages.users.companies.appointments.edit', compact('company', 'appointment'));
     }
 
-    public function update(Request $request, Company $company, $appointment)
+    public function update(AppointmentUpdateRequest $request, Company $company, $appointment)
     {
+        try {
+            $appointment = $company->appointments()->findOrFail($appointment);
+
+            $fromDate = Carbon::parse("$request->day $request->hour");
+            $appointment->update([
+                'from' => $fromDate,
+                'to' => $fromDate->clone()->addMinutes($appointment->service->duration),
+                'employee_id' => $request->employee_id,
+            ]);
+
+            flashSuccessNotification(__('Successfully updated an appointment'));
+        } catch (Exception $exception) {
+            logError($exception);
+            flashErrorNotification(__('Unexpected error occurred'));
+
+            return redirect()->back();
+        }
+
+        return to_route('users.companies.appointments.edit', [$company, $appointment]);
     }
 
-    public function changeStatus(AppointmentChangeStatusRequest $request, Company $company, $appointment)
+    public function changeStatus(AppointmentChangeStatusRequest $request, Company $company, $appointment): RedirectResponse
     {
         $appointment = $company->appointments()->findOrFail($appointment);
 

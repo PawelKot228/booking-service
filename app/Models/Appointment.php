@@ -11,6 +11,7 @@ class Appointment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'employee_id',
         'company_id',
         'service_id',
         'user_id',

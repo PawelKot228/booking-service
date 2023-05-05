@@ -7,8 +7,6 @@ use App\Actions\Company\Service\GetServiceAvailableHours;
 use App\Models\Appointment;
 use App\Models\CompanyCategory;
 use App\Models\Service;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
 
 class ScheduleSelects extends Component
@@ -19,6 +17,8 @@ class ScheduleSelects extends Component
 
     public string $day;
     public string $hour;
+
+    public bool $disabledServices = false;
 
 
     public function mount(int $companyId, ?int $appointmentId = null)
@@ -36,6 +36,8 @@ class ScheduleSelects extends Component
 
         if ($appointment) {
             $this->serviceId ??= $appointment->service_id;
+            $this->disabledServices = true;
+
             $this->day ??= $appointment->from->format('Y-m-d');
             $this->hour ??= $appointment->from->format('H:i');
         }
