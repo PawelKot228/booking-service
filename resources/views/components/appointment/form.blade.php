@@ -11,21 +11,9 @@
 
     <div class="flex flex-wrap">
         <div class="w-full md:w-3/4 lg:w-1/2">
-            <div class="p-2">
-                <x-label for="service_id" value="{{ __('Service') }}"/>
-                <livewire:select.appointment.service companyId="{{ $company->id }}" />
-                <x-input-error for="service_id" class="mt-2"/>
-            </div>
-            <div class="p-2">
-                <x-label for="day" value="{{ __('Day') }}"/>
-                <livewire:select.appointment.day companyId="{{ $company->id }}" />
-                <x-input-error for="day" class="mt-2"/>
-            </div>
-            <div class="p-2">
-                <x-label for="hour" value="{{ __('Hour') }}"/>
-                <livewire:select.appointment.hour companyId="{{ $company->id }}" />
-                <x-input-error for="hour" class="mt-2"/>
-            </div>
+            <livewire:appointment.schedule-selects
+                companyId="{{ $company->id }}"
+            />
 
             <div class="p-2">
                 <x-label for="employee_id" value="{{ __('Employee') }}"/>

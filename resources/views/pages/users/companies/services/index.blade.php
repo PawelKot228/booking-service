@@ -18,7 +18,7 @@
             </x-slot>
         </x-leading-text-header>
 
-        <livewire:company-service-table
+        <livewire:data-table.company-service-table
             companyId="{{ $company->id }}"
             companyCategoryId="{{ $companyCategory->id }}"
         />

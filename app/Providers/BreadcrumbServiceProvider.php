@@ -51,12 +51,12 @@ class BreadcrumbServiceProvider extends ServiceProvider
                     $title = $model->customer->name;
                 }
 
-                $trail->push($title, route("users.$name.show", [$model, ...$models]));
+                $trail->push($title, route("users.$name.show", [...$models, $model]));
             });
 
             Breadcrumbs::for("$name.edit", function (BreadcrumbTrail $trail, Model $model, Model ...$models) use ($name) {
                 $trail->parent("$name.show", $model, ...$models);
-                $trail->push(__('Edit'), route("users.$name.edit", [$model, ...$models]));
+                $trail->push(__('Edit'), route("users.$name.edit", [...$models, $model]));
             });
         });
 

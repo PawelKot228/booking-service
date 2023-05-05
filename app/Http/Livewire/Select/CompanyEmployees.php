@@ -9,6 +9,7 @@ use Livewire\Component;
 class CompanyEmployees extends Component
 {
     public int $companyId;
+    public $appointmentEmployeeId;
 
     public function render()
     {

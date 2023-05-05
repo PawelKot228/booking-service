@@ -14,7 +14,7 @@
             </x-button-link>
         </div>
 
-        <livewire:company-employee-table companyId="{{ $company->id }}"/>
+        <livewire:data-table.company-employee-table companyId="{{ $company->id }}"/>
     </x-page-body>
 
 </x-app-layout>

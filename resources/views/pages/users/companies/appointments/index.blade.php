@@ -18,6 +18,6 @@
             </x-slot>
         </x-leading-text-header>
 
-        <livewire:company-appointment-table companyId="{{ $company->id }}" />
+        <livewire:data-table.company-appointment-table companyId="{{ $company->id }}" />
     </x-page-body>
 </x-app-layout>
