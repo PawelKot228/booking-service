@@ -12,16 +12,16 @@
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('services.categories') }}"
-                                :active="request()->routeIs('services.categories')"
-                    >
-                        {{ __('Services') }}
-                    </x-nav-link>
                     <x-nav-link href="{{ route('services.search') }}"
                                 :active="request()->routeIs('services.search')"
                     >
                         {{ __('Search') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('users.companies.create') }}"
+                                :active="request()->routeIs('users.companies.create')">
+                        {{ __('Create company') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -100,7 +100,8 @@
                                     </div>
 
                                     @foreach(auth()->user()->ownedCompanies as $company)
-                                        <x-dropdown-link href="{{ route('users.companies.show', ['company' => $company->id]) }}">
+                                        <x-dropdown-link
+                                            href="{{ route('users.companies.show', ['company' => $company->id]) }}">
                                             {{ $company->name }}
                                         </x-dropdown-link>
                                     @endforeach
@@ -108,10 +109,6 @@
                                     <div class="border-t border-gray-200"></div>
 
                                 @endif
-
-                                <x-dropdown-link href="{{ route('users.companies.create') }}">
-                                    {{ __('Create company') }}
-                                </x-dropdown-link>
 
                                 <div class="border-t border-gray-200"></div>
 
@@ -154,13 +151,13 @@
             <x-responsive-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('services.categories') }}"
-                                   :active="request()->routeIs('services.categories')">
-                {{ __('Services') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('services.search') }}"
                                    :active="request()->routeIs('services.search')">
                 {{ __('Search') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('users.companies.create') }}"
+                                   :active="request()->routeIs('users.companies.create')">
+                {{ __('Create company') }}
             </x-responsive-nav-link>
         </div>
 
@@ -203,16 +200,11 @@
 
                     @if(auth()->user()->ownedCompanies)
                         @foreach(auth()->user()->ownedCompanies as $company)
-                            <x-responsive-nav-link href="{{ route('users.companies.show', ['company' => $company->id]) }}">
+                            <x-responsive-nav-link
+                                href="{{ route('users.companies.show', ['company' => $company->id]) }}">
                                 {{ $company->name }}
                             </x-responsive-nav-link>
                         @endforeach
-                    @else
-                        <x-responsive-nav-link href="{{ route('users.companies.create') }}"
-                                               :active="request()->routeIs('users.companies.create')"
-                        >
-                            {{ __('Create company') }}
-                        </x-responsive-nav-link>
                     @endif
 
                     {{--                    @if (Laravel\Jetstream\Jetstream::hasApiFeatures())--}}

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->foreignId('employee_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('status')->default(AppointmentStatus::PENDING->value);
+            $table->tinyInteger('status')->default(AppointmentStatus::PENDING->value);
             $table->timestamp('from');
             $table->timestamp('to');
             $table->decimal('price');

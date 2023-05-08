@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppointmentStatus;
 use App\Http\Requests\UserAppointmentStoreRequest;
 use App\Models\Appointment;
 use App\Models\Service;
@@ -56,5 +57,30 @@ class UserAppointmentController extends Controller
 
     public function destroy(Appointment $appointment)
     {
+        /** @var User $user */
+        $user = auth()->user();
+
+        if ($user->id !== $appointment->user_id) {
+            flashErrorNotification('Appointment does not belong to you');
+            return redirect()->back();
+        }
+
+        if (!$appointment->isPending() && !$appointment->isAccepted()) {
+            flashErrorNotification('Only Pending and Accepted appointments can be cancelled');
+            return redirect()->back();
+        }
+
+        try {
+            $appointment->update(['status' => AppointmentStatus::CANCELLED->value]);
+
+            flashSuccessNotification(__('Successfully cancelled appointment'));
+        } catch (\Exception $exception) {
+            logError($exception);
+            flashErrorNotification(__('Unexpected error occurred'));
+
+            return redirect()->back();
+        }
+
+        return to_route('users.appointments.show', [$appointment]);
     }
 }

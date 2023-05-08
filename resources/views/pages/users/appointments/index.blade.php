@@ -8,27 +8,60 @@
     <x-page-body>
         <div class="space-y-6 py-6 px-3">
             @foreach($appointments as $appointment)
-                <div class="flex bg-fuchsia-100 bg-opacity-50 shadow-xl p-2 rounded-md">
+                <div class="flex bg-violet-300 bg-opacity-30 shadow-xl p-2 rounded-md">
                     <div class="w-1/2 p-4 border-r-2 border-black-100">
                         <p class="text-2xl">
                             {{ $appointment->company->name }} <br>
                         </p>
-                        <p>
-                            {{ __('Employee') }}: {{ $appointment->employee?->name }}
-                        </p>
-                        <p>
-                            {{ __('Price') }}: {{ $appointment->price }} {{ $appointment->service->currency }}
-                        </p>
+                        <x-company.detail-row>
+                            <x-slot:header>
+                                {{ __('Status') }}
+                            </x-slot:header>
+
+                            <x-appointment.status-badge :status="$appointment->status"/>
+                        </x-company.detail-row>
+
+                        <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
+
+                        <x-company.detail-row>
+                            <x-slot:header>
+                                {{ __('Employee') }}
+                            </x-slot:header>
+
+                            {{ $appointment->employee?->name ?? __('Not assigned') }}
+                        </x-company.detail-row>
+
+                        <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
+
+                        <x-company.detail-row>
+                            <x-slot:header>
+                                {{ __('Price') }}
+                            </x-slot:header>
+
+                            {{ $appointment->price }} {{ $appointment->service->currency }}
+                        </x-company.detail-row>
                     </div>
                     <div class="w-1/2 p-4">
-                        <p class="text-2xl">
+                        <x-company.detail-row class="text-2xl">
+                            <x-slot:header>
+                                {{ __('Day') }}
+                            </x-slot:header>
+
                             {{ $appointment->from->isoFormat('D MMMM') }}
-                        </p>
-                        <p class="text-xl">
-                            {{ $appointment->from->format('H:i') }}
-                        </p>
+                        </x-company.detail-row>
+
+                        <x-company.detail-row class="text-xl">
+                            <x-slot:header>
+                                {{ __('Time frame') }}
+                            </x-slot:header>
+
+                            {{ $appointment->from->format('H:i') }} - {{ $appointment->to->format('H:i') }}
+                        </x-company.detail-row>
+
                         <x-button-link
-                            :href="route('users.appointments.show', ['appointment' => $appointment->getKey()])">
+                            class="mt-1 md:mt-3 block"
+                            href="{{ route('users.appointments.show', ['appointment' => $appointment->getKey()]) }}"
+                        >
                             {{ __('Show details') }}
                         </x-button-link>
                     </div>
