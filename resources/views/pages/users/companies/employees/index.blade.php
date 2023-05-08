@@ -8,11 +8,17 @@
     {{ Breadcrumbs::renderCompany($company) }}
 
     <x-page-body>
-        <div class="text-right mb-2">
-            <x-button-link href="{{ route('users.companies.employees.create', [$company]) }}">
-                {{ __('Add Employee') }}
-            </x-button-link>
-        </div>
+        <x-leading-text-header>
+            {{ __('Employees') }}
+
+            @if(auth()->user()->isManager())
+                <div class="text-right mb-2">
+                    <x-button-link href="{{ route('users.companies.employees.create', [$company]) }}">
+                        {{ __('Add Employee') }}
+                    </x-button-link>
+                </div>
+            @endif
+        </x-leading-text-header>
 
         <livewire:data-table.company-employee-table companyId="{{ $company->id }}"/>
     </x-page-body>

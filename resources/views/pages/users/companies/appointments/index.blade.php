@@ -11,11 +11,13 @@
         <x-leading-text-header>
             {{ __('Appointments') }}
 
-            <x-slot name="buttons">
-                <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
-                    {{ __('Add Appointment') }}
-                </x-button-link>
-            </x-slot>
+            @if(auth()->user()->isManager())
+                <x-slot name="buttons">
+                    <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
+                        {{ __('Add Appointment') }}
+                    </x-button-link>
+                </x-slot>
+            @endif
         </x-leading-text-header>
 
         <livewire:data-table.company-appointment-table companyId="{{ $company->id }}" />
