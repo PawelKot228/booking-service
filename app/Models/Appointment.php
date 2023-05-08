@@ -48,6 +48,11 @@ class Appointment extends Model
         return $this->belongsTo(User::class, 'employee_id');
     }
 
+    public function isCancelled(): bool
+    {
+        return $this->status === AppointmentStatus::CANCELLED->value;
+    }
+
     public function isRejected(): bool
     {
         return $this->status === AppointmentStatus::REJECTED->value;
