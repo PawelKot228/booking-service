@@ -84,6 +84,11 @@ class UserCompanyAppointmentController extends Controller
         try {
             $appointment = $company->appointments()->findOrFail($appointment);
 
+            if ($appointment->isFinished()) {
+                flashWarningNotification(__('Appointment is finished. Changing details is not possible'));
+                return redirect()->back();
+            }
+
             $fromDate = Carbon::parse("$request->day $request->hour");
             $appointment->update([
                 'from' => $fromDate,
@@ -116,14 +121,14 @@ class UserCompanyAppointmentController extends Controller
 
         if (
             $appointment->status === AppointmentStatus::ACCEPTED->value
-            && $request->status === AppointmentStatus::FINISHED->value
+            && $request->status !== AppointmentStatus::FINISHED->value
         ) {
             flashErrorNotification(__('Cannot change Accepted status, wrong status was given'));
             return redirect()->back();
         }
 
         if ($request->status === AppointmentStatus::FINISHED->value && $appointment->to->greaterThan(now())) {
-            flashErrorNotification(__('Appointment can be finished after sheduled time passes'));
+            flashErrorNotification(__('Appointment can be finished after scheduled time passes'));
             return redirect()->back();
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Appointment;
 
 use App\Actions\Company\Service\GetServiceAvailableDays;
 use App\Actions\Company\Service\GetServiceAvailableHours;
+use App\Enums\AppointmentStatus;
 use App\Models\Appointment;
 use App\Models\CompanyCategory;
 use App\Models\Service;
@@ -19,6 +20,7 @@ class ScheduleSelects extends Component
     public string $hour;
 
     public bool $disabledServices = false;
+    public bool $disabledInputs = false;
 
 
     public function mount(int $companyId, ?int $appointmentId = null)
@@ -37,6 +39,7 @@ class ScheduleSelects extends Component
         if ($appointment) {
             $this->serviceId ??= $appointment->service_id;
             $this->disabledServices = true;
+            $this->disabledInputs = $appointment->isFinished();
 
             $this->day ??= $appointment->from->format('Y-m-d');
             $this->hour ??= $appointment->from->format('H:i');

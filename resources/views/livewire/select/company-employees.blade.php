@@ -1,5 +1,6 @@
 <x-select id="employee_id" name="employee_id" required
     wire:model="appointmentEmployeeId"
+          disabled="{{ $disabled }}"
 >
     <option value="" class="hidden"></option>
     @foreach($employees as $employee)

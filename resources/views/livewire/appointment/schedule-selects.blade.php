@@ -3,7 +3,7 @@
         <x-label for="service_id" value="{{ __('Service') }}"/>
         <x-select id="service_id" name="service_id" required
                   wire:model="serviceId"
-                  disabled="{{ $disabledServices }}"
+                  disabled="{{ $disabledServices || $disabledInputs }}"
         >
             <option value="" class="hidden"></option>
             @foreach($categories as $category)
@@ -23,7 +23,9 @@
     </div>
     <div class="p-2">
         <x-label for="day" value="{{ __('Day') }}"/>
-        <x-select id="day" name="day" required wire:model="day">
+        <x-select id="day" name="day" required wire:model="day"
+                  disabled="{{ $disabledInputs }}"
+        >
             <option value="" class="hidden"></option>
             @foreach($days as $day)
                 <option value="{{ $day }}">
@@ -35,7 +37,9 @@
     </div>
     <div class="p-2">
         <x-label for="hour" value="{{ __('Hour') }}"/>
-        <x-select id="hour" name="hour" required wire:model="hour">
+        <x-select id="hour" name="hour" required wire:model="hour"
+                  disabled="{{ $disabledInputs }}"
+        >
             <option value="" class="hidden"></option>
             @foreach($hours as $hour)
                 <option value="{{ $hour['time'] }}" {{ $hour['available'] ? '' : 'disabled' }}>

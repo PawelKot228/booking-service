@@ -32,7 +32,7 @@
                         </x-slot:header>
 
                         <x-slot:buttons>
-                            <x-button-small>
+                            <x-button-small disabled="{{ $appointment->isFinished() }}">
                                 {{ __('Save') }}
                             </x-button-small>
                         </x-slot:buttons>
@@ -46,6 +46,7 @@
                             <x-label for="employee_id" value="{{ __('Employee') }}"/>
                             <livewire:select.company-employees
                                 companyId="{{ $company->id }}"
+                                disabled="{{ $appointment->isFinished() }}"
                                 appointmentEmployeeId="{{ $appointment->employee_id }}"
                             />
                             <x-input-error for="employee_id" class="mt-2"/>

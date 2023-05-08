@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AppointmentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,5 +46,25 @@ class Appointment extends Model
     public function employee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'employee_id');
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status === AppointmentStatus::REJECTED->value;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === AppointmentStatus::PENDING->value;
+    }
+
+    public function isAccepted(): bool
+    {
+        return $this->status === AppointmentStatus::ACCEPTED->value;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->status === AppointmentStatus::FINISHED->value;
     }
 }
