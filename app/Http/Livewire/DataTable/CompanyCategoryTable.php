@@ -29,12 +29,8 @@ class CompanyCategoryTable extends DataTableComponent
     {
         return [
             Column::make(__('Actions'), 'id')
-                ->format(fn (int $id) => view('components.datatable.actions')
+                ->format(fn(int $id) => view('components.datatable.actions')
                     ->with('actions', [
-                        'edit' => route(
-                            'users.companies.categories.edit',
-                            ['company' => $this->companyId, 'category' => $id]
-                        ),
                         'services' => [
                             'tooltip' => 'services',
                             'icon' => 'carousel',
@@ -43,13 +39,18 @@ class CompanyCategoryTable extends DataTableComponent
                                 ['company' => $this->companyId, 'category' => $id]
                             )
                         ],
-                        'delete' => route(
-                            'users.companies.categories.destroy',
-                            ['company' => $this->companyId, 'category' => $id]
-                        ),
+                        ...auth()->user()->isManager() ? [
+                            'edit' => route(
+                                'users.companies.categories.edit',
+                                ['company' => $this->companyId, 'category' => $id]
+                            ),
+                            'delete' => route(
+                                'users.companies.categories.destroy',
+                                ['company' => $this->companyId, 'category' => $id]
+                            ),
+                        ] : [],
                     ])
                 ),
-
             Column::make("Name", "name")
                 ->sortable(),
             Column::make("Description", "description")

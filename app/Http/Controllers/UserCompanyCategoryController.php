@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\CategoryRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
@@ -9,6 +10,14 @@ use Illuminate\Http\RedirectResponse;
 
 class UserCompanyCategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+            ->only(['index', 'show']);
+        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+            ->except(['index', 'show']);
+    }
+
     public function index(Company $company)
     {
         return view('pages.users.companies.categories.index', compact('company'));

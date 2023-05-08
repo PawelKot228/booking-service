@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\StoreRequest;
 use App\Models\Company;
 use App\Models\User;
@@ -10,9 +11,12 @@ use Illuminate\Http\Request;
 
 class UserCompanyController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-
+        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+            ->only(['index', 'show']);
+        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+            ->except(['index', 'show']);
     }
 
     public function create()

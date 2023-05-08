@@ -79,10 +79,12 @@ class CompanyAppointmentTable extends DataTableComponent
                             'users.companies.appointments.show',
                             ['company' => $this->companyId, 'appointment' => $id]
                         ),
-                        'edit' => route(
-                            'users.companies.appointments.edit',
-                            ['company' => $this->companyId, 'appointment' => $id]
-                        ),
+                        ...auth()->user()->isManager() ? [
+                            'edit' => route(
+                                'users.companies.appointments.edit',
+                                ['company' => $this->companyId, 'appointment' => $id]
+                            ),
+                        ] : [],
                     ])
                 ),
 

@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\EmployeeRole;
 use App\Models\Pivot\CompanyUser;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +13,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Sanctum\TransientToken;
 
 class User extends Authenticatable
 {
@@ -76,4 +74,36 @@ class User extends Authenticatable
     {
         return $this->hasOne(CompanyUser::class);
     }
+
+    public function getRoleName(): ?string
+    {
+        return $this?->role->type;
+    }
+
+    public function isEmployee(): bool
+    {
+        return in_array($this->getRoleName(), [
+            EmployeeRole::EMPLOYEE->value,
+            EmployeeRole::MANAGER->value,
+            EmployeeRole::OWNER->value
+        ]);
+    }
+
+    public function isManager(): bool
+    {
+        return in_array($this->getRoleName(), [
+            EmployeeRole::MANAGER->value,
+            EmployeeRole::OWNER->value
+        ]);
+    }
+
+    public function isOwner(?Company $company = null): bool
+    {
+        if ($company?->user_id === $this->id) {
+            return true;
+        }
+
+        return $this->getRoleName() === EmployeeRole::OWNER->value;
+    }
+
 }

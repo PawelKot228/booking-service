@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AppointmentStatus;
+use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\AppointmentChangeStatusRequest;
 use App\Http\Requests\Company\AppointmentStoreRequest;
 use App\Http\Requests\Company\AppointmentUpdateRequest;
@@ -16,6 +17,14 @@ use Illuminate\Http\RedirectResponse;
 
 class UserCompanyAppointmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+            ->only(['index', 'show', 'changeStatus']);
+        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+            ->except(['index', 'show', 'changeStatus']);
+    }
+
     public function index(Company $company)
     {
         $company->load(['appointments' => ['service', 'customer', 'employee']]);
@@ -70,7 +79,7 @@ class UserCompanyAppointmentController extends Controller
         return view('pages.users.companies.appointments.edit', compact('company', 'appointment'));
     }
 
-    public function update(AppointmentUpdateRequest $request, Company $company, $appointment)
+    public function update(AppointmentUpdateRequest $request, Company $company, $appointment): RedirectResponse
     {
         try {
             $appointment = $company->appointments()->findOrFail($appointment);
@@ -132,7 +141,7 @@ class UserCompanyAppointmentController extends Controller
             $appointment->delete();
 
             flashSuccessNotification(__('Successfully deleted!'));
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             flashErrorNotification(__("Could not find Appointment"));
         } catch (Exception $exception) {
             logError($exception);

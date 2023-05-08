@@ -33,20 +33,24 @@ class CompanyServiceTable extends DataTableComponent
 
     public function columns(): array
     {
+        $actionsColumn = Column::make(__('Actions'), 'id')
+            ->format(fn(int $id) => view('components.datatable.actions')
+                ->with('actions', [
+                    'edit' => route(
+                        'users.companies.categories.services.edit',
+                        ['company' => $this->companyId, 'category' => $this->companyCategoryId, 'service' => $id]
+                    ),
+                    'delete' => route(
+                        'users.companies.categories.services.destroy',
+                        ['company' => $this->companyId, 'category' => $this->companyCategoryId, 'service' => $id]
+                    ),
+                ])
+            );
+
+
         return [
-            Column::make(__('Actions'), 'id')
-                ->format(fn(int $id) => view('components.datatable.actions')
-                    ->with('actions', [
-                        'edit' => route(
-                            'users.companies.categories.services.edit',
-                            ['company' => $this->companyId, 'category' => $this->companyCategoryId, 'service' => $id]
-                        ),
-                        'delete' => route(
-                            'users.companies.categories.services.destroy',
-                            ['company' => $this->companyId, 'category' => $this->companyCategoryId, 'service' => $id]
-                        ),
-                    ])
-                ),
+            ...auth()->user()->isManager() ? [$actionsColumn] : [],
+
             Column::make("Name", "name")
                 ->sortable(),
             Column::make("Description", "description")

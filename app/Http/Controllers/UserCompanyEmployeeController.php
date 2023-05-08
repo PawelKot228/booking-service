@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\EmployeeStoreRequest;
 use App\Http\Requests\Company\EmployeeUpdateRequest;
 use App\Models\Company;
@@ -11,6 +12,14 @@ use Illuminate\Http\RedirectResponse;
 
 class UserCompanyEmployeeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+            ->only(['index', 'show']);
+        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+            ->except(['index', 'show']);
+    }
+
     public function index(Company $company)
     {
         return view('pages.users.companies.employees.index', compact('company'));

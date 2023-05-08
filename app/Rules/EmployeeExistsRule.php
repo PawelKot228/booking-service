@@ -22,7 +22,7 @@ class EmployeeExistsRule implements ValidationRule
         $employeeExists = Company::where('companies.id', $company)
             ->join('company_user', 'companies.id', '=', 'company_user.company_id')
             ->join('users', 'company_user.user_id', '=', 'users.id')
-            //->where('users.email', $value)
+            ->where('users.email', $value)
             ->exists();
 
         if ($employeeExists) {

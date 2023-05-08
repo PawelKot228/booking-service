@@ -30,9 +30,8 @@ class CompanyEmployeeTable extends DataTableComponent
 
     public function columns(): array
     {
-        return [
-            Column::make(__('Actions'), 'id')
-            ->format(fn (int $id) => view('components.datatable.actions')
+        $actionsColumn = Column::make(__('Actions'), 'id')
+            ->format(fn(int $id) => view('components.datatable.actions')
                 ->with('actions', [
                     'edit' => route(
                         'users.companies.employees.edit',
@@ -43,8 +42,17 @@ class CompanyEmployeeTable extends DataTableComponent
                         ['company' => $this->companyId, 'employee' => $id]
                     )
                 ])
-            ),
+            );
+
+
+        return [
+            ...auth()->user()->isManager() ? [$actionsColumn] : [],
+
             Column::make(__('Name'), 'name')
+                ->searchable()
+                ->sortable(),
+            Column::make(__('Name'), 'role.type')
+                ->format(fn(string $type) => __($type))
                 ->searchable()
                 ->sortable(),
             Column::make(__('Email'), 'email')
