@@ -9,7 +9,7 @@ use Livewire\Component;
 class CompanyEmployees extends Component
 {
     public int $companyId;
-    public ?int $appointmentEmployeeId;
+    public null|int|string $appointmentEmployeeId;
 
     public function render()
     {
