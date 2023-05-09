@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function getRoleName(): ?string
     {
-        return $this?->role->type;
+        return $this?->role?->type;
     }
 
     public function isEmployee(): bool

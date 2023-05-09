@@ -14,9 +14,9 @@ class UserCompanyController extends Controller
     public function __construct()
     {
         $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
-            ->only(['index', 'show']);
+            ->only(['index', 'show', 'create', 'store']);
         $this->middleware('company:' . EmployeeRole::MANAGER->value)
-            ->except(['index', 'show']);
+            ->except(['index', 'show', 'create', 'store']);
     }
 
     public function create()

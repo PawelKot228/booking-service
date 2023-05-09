@@ -19,6 +19,10 @@ class CompanyRoleMiddleware
             $company = Company::find($company);
         }
 
+        if (!$company) {
+            return $next($request);
+        }
+
         if ((!$role || $role === EmployeeRole::OWNER->value) && $user->isOwner($company)) {
             return $next($request);
         }
