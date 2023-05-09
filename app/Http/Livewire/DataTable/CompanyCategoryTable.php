@@ -39,7 +39,7 @@ class CompanyCategoryTable extends DataTableComponent
                                 ['company' => $this->companyId, 'category' => $id]
                             )
                         ],
-                        ...auth()->user()->isManager() ? [
+                        ...auth()->user()?->isManager() ? [
                             'edit' => route(
                                 'users.companies.categories.edit',
                                 ['company' => $this->companyId, 'category' => $id]

@@ -49,7 +49,7 @@ class CompanyServiceTable extends DataTableComponent
 
 
         return [
-            ...auth()->user()->isManager() ? [$actionsColumn] : [],
+            ...auth()->user()?->isManager() ? [$actionsColumn] : [],
 
             Column::make("Name", "name")
                 ->sortable(),

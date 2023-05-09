@@ -41,7 +41,7 @@ class CompanyEmployeeTable extends DataTableComponent
             );
 
         return [
-            ...auth()->user()->isManager() ? [$actionsColumn] : [],
+            ...auth()->user()?->isManager() ? [$actionsColumn] : [],
 
             Column::make(__('Name'), 'name')
                 ->searchable()
