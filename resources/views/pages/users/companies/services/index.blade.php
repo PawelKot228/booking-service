@@ -11,7 +11,7 @@
         <x-leading-text-header>
             {{ __('Services') }}
 
-            @if(auth()->user()->isManager())
+            @if(auth()->user()->isManager($company))
                 <x-slot name="buttons">
                     <x-button-link
                         href="{{ route('users.companies.categories.services.create', [$company, $companyCategory]) }}">

@@ -11,7 +11,7 @@
         <x-leading-text-header>
             {{ __('Appointments') }}
 
-            @if(auth()->user()->isManager())
+            @if(auth()->user()->isManager($company))
                 <x-slot name="buttons">
                     <x-button-link href="{{ route('users.companies.appointments.create', [$company]) }}">
                         {{ __('Add Appointment') }}

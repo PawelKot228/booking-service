@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Company\FetchCompaniesList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

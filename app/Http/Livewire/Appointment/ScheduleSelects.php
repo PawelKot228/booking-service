@@ -2,12 +2,10 @@
 
 namespace App\Http\Livewire\Appointment;
 
-use App\Actions\Company\Service\GetServiceAvailableDays;
-use App\Actions\Company\Service\GetServiceAvailableHours;
-use App\Enums\AppointmentStatus;
 use App\Models\Appointment;
 use App\Models\CompanyCategory;
 use App\Models\Service;
+use App\Services\ServiceService;
 use Livewire\Component;
 
 class ScheduleSelects extends Component
@@ -48,8 +46,9 @@ class ScheduleSelects extends Component
         $hours = collect();
         $days = collect();
         if ($service) {
-            $hours = collect((new GetServiceAvailableHours())->handle($service));
-            $days = collect((new GetServiceAvailableDays())->handle($service));
+            $serviceService = new ServiceService();
+            $hours = collect($serviceService->getAvailableHours($service));
+            $days = collect($serviceService->getAvailableDays($service));
         }
 
         if ($appointment?->from->is($this->day ?? '')) {

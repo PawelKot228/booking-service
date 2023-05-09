@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Actions\Company;
+namespace App\Services;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\SearchRequest;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 
-class FetchCompaniesList extends Controller
+class CompanyService
 {
-    public function handle(Builder $query, SearchRequest $request): Builder
+    public function listQuery(Builder $query, SearchRequest $request): Builder
     {
         $query->select([
             'companies.*',
@@ -42,4 +41,5 @@ class FetchCompaniesList extends Controller
             ->groupBy('companies.id')
             ->limit(20);
     }
+
 }

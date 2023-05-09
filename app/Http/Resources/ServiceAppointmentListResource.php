@@ -6,14 +6,18 @@ use App\Actions\Company\Service\GetServiceAvailableDays;
 use App\Actions\Company\Service\GetServiceAvailableHours;
 use App\Enums\Day;
 use App\Http\Requests\AvailableAppointmentRequest;
+use App\Models\Service;
+use App\Services\ServiceService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Service */
+/** @mixin Service */
 class ServiceAppointmentListResource extends JsonResource
 {
     public function toArray(AvailableAppointmentRequest|Request $request): array
     {
+        $serviceService = new ServiceService();
+
         return [
             'id' => $this->id,
             'company_id' => $this->company_id,
@@ -23,8 +27,8 @@ class ServiceAppointmentListResource extends JsonResource
             'price' => $this->price,
             'currency' => $this->currency,
             'appointmentUrl' => route('users.appointments.store'),
-            'availableAppointments' => (new GetServiceAvailableHours)->handle($this),
-            'openDays' => (new GetServiceAvailableDays())->handle($this),
+            'availableAppointments' => $serviceService->getAvailableHours($this),
+            'openDays' => $serviceService->getAvailableDays($this),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

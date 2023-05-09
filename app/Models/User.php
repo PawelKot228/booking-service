@@ -86,15 +86,19 @@ class User extends Authenticatable
             EmployeeRole::EMPLOYEE->value,
             EmployeeRole::MANAGER->value,
             EmployeeRole::OWNER->value
-        ]);
+        ], true);
     }
 
-    public function isManager(): bool
+    public function isManager(?Company $company = null): bool
     {
+        if ($this->id === $company?->user_id) {
+            return true;
+        }
+
         return in_array($this->getRoleName(), [
             EmployeeRole::MANAGER->value,
             EmployeeRole::OWNER->value
-        ]);
+        ], true);
     }
 
     public function isOwner(?Company $company = null): bool

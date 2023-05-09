@@ -11,7 +11,7 @@
         <x-leading-text-header>
             {{ __('Employees') }}
 
-            @if(auth()->user()->isManager())
+            @if(auth()->user()->isManager($company))
                 <div class="text-right mb-2">
                     <x-button-link href="{{ route('users.companies.employees.create', [$company]) }}">
                         {{ __('Add Employee') }}
