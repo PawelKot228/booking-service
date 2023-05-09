@@ -11,18 +11,21 @@
             {{ __('Appointment') }} #{{$appointment->id}}
 
             <x-slot:buttons>
-{{--                <x-button-link-warning :href="route('home')">--}}
-{{--                    {{ __('Reschedule') }}--}}
-{{--                </x-button-link-warning>--}}
+                {{--                <x-button-link-warning :href="route('home')">--}}
+                {{--                    {{ __('Reschedule') }}--}}
+                {{--                </x-button-link-warning>--}}
 
                 <form class="delete-action inline-block"
                       method="POST"
-                      action="{{ route('users.appointments.destroy', [$appointment]) }}"
+                      action="{{ route('users.appointments.update', [$appointment]) }}"
                 >
                     @csrf
-                    @method('DELETE')
+                    @method('PUT')
 
-                    <x-button-danger >
+                    <x-button-danger
+                        name="status"
+                        value="{{ \App\Enums\AppointmentStatus::CANCELLED->value }}"
+                    >
                         {{ __('Cancel Appointment') }}
                     </x-button-danger>
                 </form>
@@ -32,7 +35,7 @@
 
         <div class="flex flex-wrap my-4 gap-y-2">
             <div class="w-full sm:w-1/2 px-4">
-                <x-appointment.card.base-info :appointment="$appointment" />
+                <x-appointment.card.base-info :appointment="$appointment"/>
             </div>
         </div>
 
