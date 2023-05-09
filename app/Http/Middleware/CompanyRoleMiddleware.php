@@ -24,8 +24,8 @@ class CompanyRoleMiddleware
         }
 
         if (
-            ((!$role || $role === EmployeeRole::OWNER->value) && $user->isOwner($company))
-            || $company->user_id === $user->id
+            $company->user_id === $user->id
+            || ((!$role || $role === EmployeeRole::OWNER->value) && $user->isOwner($company))
         ) {
             return $next($request);
         }
