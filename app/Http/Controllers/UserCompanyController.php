@@ -26,12 +26,12 @@ class UserCompanyController extends Controller
         return view('pages.users.companies.create');
     }
 
-    public function store(StoreRequest $request, CompanyService $companyService): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
         /** @var User $user */
         $user = auth()->user();
 
-        $company = $companyService->save($request->validated(), $user);
+        $company = $this->companyService->save($request->validated(), $user);
 
         if (!$company) {
             flashErrorNotification(__('Unexpected error occurred'));
