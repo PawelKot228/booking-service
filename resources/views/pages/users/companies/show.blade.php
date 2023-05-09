@@ -20,7 +20,6 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 py-5 md:py-10">
 
-
             <x-company.widget-card href="{{ route('users.companies.employees.index', [$company]) }}">
                 <x-slot name="icon">
                     <box-icon name='carousel' class="fill-red-500"></box-icon>
@@ -44,7 +43,6 @@
                 </x-slot>
 
                 {{ __('Stay organized with our appointment widget. Click to view a simple table of upcoming appointments and their details. Never miss a meeting again.') }}
-
             </x-company.widget-card>
 
             <x-company.widget-card href="{{ route('users.companies.categories.index', [$company]) }}">
@@ -57,7 +55,18 @@
                 </x-slot>
 
                 {{ __('Effortlessly browse through our products/services with our categories widget. Click to access a simple list of categories and quickly find what you\'re looking for. Simplify your search today.') }}
+            </x-company.widget-card>
 
+            <x-company.widget-card href="{{ route('users.companies.edit', [$company]) }}">
+                <x-slot name="icon">
+                    <box-icon name='edit-alt' class="fill-red-500"></box-icon>
+                </x-slot>
+
+                <x-slot name="header">
+                    {{ __('Edit') }}
+                </x-slot>
+
+                {{ __('Effortlessly update and enhance your company page. Showcase your brand\'s story, values, and achievements with ease. Stay ahead of the competition with a polished online presence.') }}
             </x-company.widget-card>
 
         </div>
