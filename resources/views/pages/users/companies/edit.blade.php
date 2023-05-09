@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    {{ Breadcrumbs::renderCompany($company) }}
+
     <x-page-body>
         <form action="{{ route('users.companies.store') }}" method="POST">
             @csrf

@@ -39,14 +39,14 @@
     <div class="w-1/2 md:w-full lg:w-1/2 p-2">
         <x-label for="latitude" value="{{ __('Latitude') }}"/>
         <x-input id="latitude" name="latitude" type="text" class="mt-1 block w-full"
-                 value="{{ old('latitude') }}"
+                 value="{{ old('latitude') ?? $company?->latitude }}"
         />
         <x-input-error for="latitude" class="mt-2"/>
     </div>
     <div class="w-1/2 md:w-full lg:w-1/2 p-2">
         <x-label for="longitude" value="{{ __('Longitude ') }}"/>
         <x-input id="longitude" name="longitude" type="text" class="mt-1 block w-full"
-                 value="{{ old('longitude') }}"
+                 value="{{ old('longitude') ?? $company?->longitude }}"
         />
         <x-input-error for="longitude" class="mt-2"/>
     </div>
