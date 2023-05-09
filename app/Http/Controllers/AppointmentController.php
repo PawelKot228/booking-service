@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AvailableAppointmentRequest;
-use App\Http\Resources\ServiceAppointmentListResource;
+use App\Http\Resources\ScheduleAppointmentResource;
 use App\Models\Appointment;
 use App\Models\Service;
 use Carbon\Carbon;
@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {
@@ -29,7 +28,7 @@ class AppointmentController extends Controller
             ->has('company')
             ->findOrFail($service);
 
-        return response()->json((new ServiceAppointmentListResource($service)));
+        return response()->json((new ScheduleAppointmentResource($service)));
     }
 
     public function index($company, $service)

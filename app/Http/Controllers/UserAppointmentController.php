@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AppointmentStatus;
 use App\Http\Requests\UserAppointmentStoreRequest;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Services\AppointmentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserAppointmentController extends Controller
 {
+    public function __construct(private readonly AppointmentService $appointmentService)
+    {
+    }
+
     public function index()
     {
         /** @var User $user */
@@ -30,17 +33,13 @@ class UserAppointmentController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-
         $service = Service::with(['category'])->findOrFail($request->service_id);
 
-        $from = Carbon::parse($request->from);
+        $appointment = $this->appointmentService->save($user, $service, $request);
 
-        $appointment = $user->appointments()->create([
-            ...$request->toArray(),
-            'company_id' => $service->category->company_id,
-            'to' => $from->addMinutes($service->duration),
-            'price' => $service->price,
-        ]);
+        if (!$appointment) {
+            return response()->json(['message' => __('Unexpected error occurred')], 400);
+        }
 
         return response()->json($appointment);
     }
@@ -52,7 +51,7 @@ class UserAppointmentController extends Controller
         return view('pages.users.appointments.show', compact('appointment'));
     }
 
-    public function update(Request $request, Appointment $appointment)
+    public function update(Request $request, Appointment $appointment): RedirectResponse
     {
         /** @var User $user */
         $user = auth()->user();
@@ -67,16 +66,14 @@ class UserAppointmentController extends Controller
             return redirect()->back();
         }
 
-        try {
-            $appointment->update(['status' => AppointmentStatus::CANCELLED->value]);
+        $updateSuccessful = $this->appointmentService->cancelAppointment($appointment);
 
-            flashSuccessNotification(__('Successfully cancelled appointment'));
-        } catch (\Exception $exception) {
-            logError($exception);
+        if (!$updateSuccessful) {
             flashErrorNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully cancelled appointment'));
 
         return to_route('users.appointments.show', [$appointment]);
 

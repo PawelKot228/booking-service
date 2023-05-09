@@ -6,15 +6,17 @@ use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\CategoryRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
+use App\Services\CompanyCategoryService;
 use Illuminate\Http\RedirectResponse;
 
 class UserCompanyCategoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+    public function __construct(
+        private readonly CompanyCategoryService $categoryService
+    ) {
+        $this->middleware('company:'.EmployeeRole::EMPLOYEE->value)
             ->only(['index', 'show']);
-        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+        $this->middleware('company:'.EmployeeRole::MANAGER->value)
             ->except(['index', 'show']);
     }
 
@@ -30,21 +32,21 @@ class UserCompanyCategoryController extends Controller
 
     public function store(CategoryRequest $request, Company $company): RedirectResponse
     {
-        try {
-            $companyCategory = $company->categories()->create($request->validated());
-            flashSuccessNotification(__('Successfully created a category'));
-        } catch (\Exception $exception) {
-            logError($exception);
-            flashErrorNotification(__('Unexpected error occurred'));
+        $companyCategory = $this->categoryService->save($company, $request);
 
+        if (!$companyCategory) {
+            flashErrorNotification(__('Unexpected error occurred'));
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully created a category'));
 
         return to_route('users.companies.categories.edit', [$company, $companyCategory]);
     }
 
     public function show(CompanyCategory $companyCategory)
     {
+        dd(5);
     }
 
     public function edit(Company $company, $companyCategory)
@@ -56,19 +58,14 @@ class UserCompanyCategoryController extends Controller
 
     public function update(CategoryRequest $request, Company $company, $companyCategory): RedirectResponse
     {
-        try {
-            $companyCategory = $company->categories()->findOrFail($companyCategory);
-            $companyCategory->fill(
-                $request->validated()
-            )->save();
+        $companyCategory = $company->categories()->findOrFail($companyCategory);
 
-            flashSuccessNotification(__('Successfully updated!'));
-        } catch (\Exception $exception) {
-            logError($exception);
+        if (!$this->categoryService->update($companyCategory, $request)) {
             flashErrorNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully updated!'));
 
         return to_route('users.companies.categories.edit', [$company, $companyCategory]);
     }

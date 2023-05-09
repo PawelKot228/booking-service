@@ -21,7 +21,7 @@ class ScheduleSelects extends Component
     public bool $disabledInputs = false;
 
 
-    public function mount(int $companyId, ?int $appointmentId = null)
+    public function mount(int $companyId, ?int $appointmentId = null): void
     {
         $this->companyId = $companyId;
         $this->appointmentId = $appointmentId;

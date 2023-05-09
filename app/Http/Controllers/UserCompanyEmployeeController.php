@@ -7,16 +7,18 @@ use App\Http\Requests\Company\EmployeeStoreRequest;
 use App\Http\Requests\Company\EmployeeUpdateRequest;
 use App\Models\Company;
 use App\Models\User;
+use App\Services\CompanyEmployeeService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 
 class UserCompanyEmployeeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+    public function __construct(
+        private readonly CompanyEmployeeService $employeeService
+    ) {
+        $this->middleware('company:'.EmployeeRole::EMPLOYEE->value)
             ->only(['index', 'show']);
-        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+        $this->middleware('company:'.EmployeeRole::MANAGER->value)
             ->except(['index', 'show']);
     }
 
@@ -32,20 +34,14 @@ class UserCompanyEmployeeController extends Controller
 
     public function store(EmployeeStoreRequest $request, Company $company): RedirectResponse
     {
-        try {
-            $user = User::where('email', $request->email)->firstOrFail();
-            $company->employeesPivot()->create([
-                'user_id' => $user->getKey(),
-                'type' => $request->type,
-            ]);
+        $user = $this->employeeService->save($company, $request);
 
-            flashSuccessNotification(__('Successfully created!'));
-        } catch (\Exception $exception) {
-            logError($exception);
+        if (!$user) {
             flashErrorNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully created!'));
 
         return to_route('users.companies.employees.edit', [$company, $user]);
     }
@@ -63,18 +59,12 @@ class UserCompanyEmployeeController extends Controller
 
     public function update(EmployeeUpdateRequest $request, Company $company, $user): RedirectResponse
     {
-        try {
-            $company->employeesPivot()
-                ->where('user_id', $user)
-                ->update(['type' => $request->type]);
-
-            flashSuccessNotification(__('Successfully created!'));
-        } catch (\Exception $exception) {
-            logError($exception);
+        if (!$this->employeeService->update($company, $user, $request)) {
             flashErrorNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully created!'));
 
         return to_route('users.companies.employees.edit', [$company, $user]);
     }

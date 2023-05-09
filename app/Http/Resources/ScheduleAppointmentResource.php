@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Actions\Company\Service\GetServiceAvailableDays;
-use App\Actions\Company\Service\GetServiceAvailableHours;
-use App\Enums\Day;
 use App\Http\Requests\AvailableAppointmentRequest;
 use App\Models\Service;
 use App\Services\ServiceService;
@@ -12,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin Service */
-class ServiceAppointmentListResource extends JsonResource
+class ScheduleAppointmentResource extends JsonResource
 {
     public function toArray(AvailableAppointmentRequest|Request $request): array
     {

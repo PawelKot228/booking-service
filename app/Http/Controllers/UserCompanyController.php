@@ -6,16 +6,18 @@ use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\StoreRequest;
 use App\Models\Company;
 use App\Models\User;
+use App\Services\CompanyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserCompanyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+    public function __construct(
+        private readonly CompanyService $companyService
+    ) {
+        $this->middleware('company:'.EmployeeRole::EMPLOYEE->value)
             ->only(['index', 'show', 'create', 'store']);
-        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+        $this->middleware('company:'.EmployeeRole::MANAGER->value)
             ->except(['index', 'show', 'create', 'store']);
     }
 
@@ -24,23 +26,23 @@ class UserCompanyController extends Controller
         return view('pages.users.companies.create');
     }
 
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request, CompanyService $companyService): RedirectResponse
     {
         /** @var User $user */
         $user = auth()->user();
 
-        try {
-            $company = $user->ownedCompanies()->create($request->validated());
-            flashSuccessNotification(__('Successfully created a company!'));
-        } catch (\Exception $exception) {
-            logError($exception);
-            flashErrorNotification(__('Unexpected error occurred'));
+        $company = $companyService->save($request->validated(), $user);
 
+        if (!$company) {
+            flashErrorNotification(__('Unexpected error occurred'));
             return redirect()->back();
         }
 
+        flashSuccessNotification(__('Successfully created a company!'));
+
         return to_route('users.companies.edit', ['company' => $company->getKey()]);
     }
+
     public function show(Company $company)
     {
         return view('pages.users.companies.show', compact('company'));

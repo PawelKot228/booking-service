@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\SearchRequest;
+use App\Models\Company;
+use App\Models\User;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -40,6 +43,29 @@ class CompanyService
         return $query
             ->groupBy('companies.id')
             ->limit(20);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function save(array $fill, User $user): ?Company
+    {
+        DB::beginTransaction();
+        try {
+            $company = $user->ownedCompanies()->create($fill);
+            $company->employees()->attach($user->id, ['type' => EmployeeRole::OWNER->value]);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            logError($exception);
+            flashErrorNotification(__('Unexpected error occurred'));
+
+            return null;
+        }
+
+        return $company;
     }
 
 }

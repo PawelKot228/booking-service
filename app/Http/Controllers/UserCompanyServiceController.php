@@ -6,16 +6,18 @@ use App\Enums\EmployeeRole;
 use App\Http\Requests\Company\ServiceRequest;
 use App\Models\Company;
 use App\Models\Service;
+use App\Services\ServiceService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 
 class UserCompanyServiceController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('company:' . EmployeeRole::EMPLOYEE->value)
+    public function __construct(
+        private readonly ServiceService $serviceService
+    ) {
+        $this->middleware('company:'.EmployeeRole::EMPLOYEE->value)
             ->only(['index', 'show']);
-        $this->middleware('company:' . EmployeeRole::MANAGER->value)
+        $this->middleware('company:'.EmployeeRole::MANAGER->value)
             ->except(['index', 'show']);
     }
 
@@ -37,16 +39,14 @@ class UserCompanyServiceController extends Controller
     {
         $companyCategory = $company->categories()->findOrFail($companyCategory);
 
-        try {
-            $service = $companyCategory->services()->create($request->validated());
+        $service = $this->serviceService->save($companyCategory, $request);
 
-            flashSuccessNotification(__('Successfully created!'));
-        } catch (Exception $exception) {
-            logError($exception);
+        if (!$service) {
             flashSuccessNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully created!'));
 
         return to_route('users.companies.categories.services.edit', [$company, $companyCategory, $service]);
     }
@@ -65,21 +65,15 @@ class UserCompanyServiceController extends Controller
 
     public function update(ServiceRequest $request, Company $company, $companyCategory, $service): RedirectResponse
     {
-        try {
-            $companyCategory = $company->categories()->findOrFail($companyCategory);
-            $service = $companyCategory->services()->findOrFail($service);
+        $companyCategory = $company->categories()->findOrFail($companyCategory);
+        $service = $companyCategory->services()->findOrFail($service);
 
-            $service->fill(
-                $request->validated()
-            )->save();
-
-            flashSuccessNotification(__('Successfully created!'));
-        } catch (Exception $exception) {
-            logError($exception);
+        if (!$this->serviceService->update($service, $request)) {
             flashSuccessNotification(__('Unexpected error occurred'));
-
             return redirect()->back();
         }
+
+        flashSuccessNotification(__('Successfully created!'));
 
         return to_route('users.companies.categories.services.edit', [$company, $companyCategory, $service]);
     }

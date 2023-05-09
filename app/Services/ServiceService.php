@@ -3,13 +3,16 @@
 namespace App\Services;
 
 use App\Enums\Day;
-use App\Http\Resources\ServiceAppointmentListResource;
+use App\Http\Resources\ScheduleAppointmentResource;
+use App\Models\CompanyCategory;
 use App\Models\Service;
+use Exception;
+use Illuminate\Http\Request;
 
 class ServiceService
 {
 
-    public function getAvailableDays(Service|ServiceAppointmentListResource $service): array
+    public function getAvailableDays(Service|ScheduleAppointmentResource $service): array
     {
         $openDay = today();
         $openHours = $service->company->open_hours ?? [];
@@ -33,7 +36,7 @@ class ServiceService
         return $openDays;
     }
 
-    public function getAvailableHours(Service|ServiceAppointmentListResource $service): array
+    public function getAvailableHours(Service|ScheduleAppointmentResource $service): array
     {
         $currentDay = Day::getDayOfTheWeek(now()->dayOfWeekIso);
         $openHours = $service->company->open_hours[$currentDay->value] ?? [];
@@ -85,5 +88,31 @@ class ServiceService
         return $appointmentHours;
     }
 
+    public function save(CompanyCategory $companyCategory, Request $request): ?Service
+    {
+        try {
+            $service = $companyCategory->services()->create($request->validated());
+        } catch (Exception $exception) {
+            logError($exception);
+
+            return null;
+        }
+
+        return $service;
+    }
+
+
+    public function update(Service $service, Request $request): bool
+    {
+        try {
+            $service->fill($request->validated())->save();
+        } catch (Exception $exception) {
+            logError($exception);
+
+            return false;
+        }
+
+        return true;
+    }
 
 }

@@ -13,6 +13,7 @@ class CompanyEmployeeTable extends DataTableComponent
     use HasTooltips;
 
     public int $companyId;
+    public int $ownerId;
 
     public function configure(): void
     {
@@ -32,18 +33,12 @@ class CompanyEmployeeTable extends DataTableComponent
     {
         $actionsColumn = Column::make(__('Actions'), 'id')
             ->format(fn(int $id) => view('components.datatable.actions')
-                ->with('actions', [
-                    'edit' => route(
-                        'users.companies.employees.edit',
-                        ['company' => $this->companyId, 'employee' => $id]
-                    ),
-                    'delete' => route(
-                        'users.companies.employees.destroy',
-                        ['company' => $this->companyId, 'employee' => $id]
-                    )
-                ])
+                ->with('actions',
+                    $id !== $this->ownerId ? [
+                        'edit' => route('users.companies.employees.edit', [$this->companyId, $id]),
+                        'delete' => route('users.companies.employees.destroy', [$this->companyId, $id])
+                    ] : [])
             );
-
 
         return [
             ...auth()->user()->isManager() ? [$actionsColumn] : [],

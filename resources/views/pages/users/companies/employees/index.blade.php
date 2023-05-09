@@ -12,15 +12,18 @@
             {{ __('Employees') }}
 
             @if(auth()->user()->isManager($company))
-                <div class="text-right mb-2">
+                <x-slot:buttons>
                     <x-button-link href="{{ route('users.companies.employees.create', [$company]) }}">
                         {{ __('Add Employee') }}
                     </x-button-link>
-                </div>
+                </x-slot:buttons>
             @endif
         </x-leading-text-header>
 
-        <livewire:data-table.company-employee-table companyId="{{ $company->id }}"/>
+        <livewire:data-table.company-employee-table
+            companyId="{{ $company->id }}"
+            ownerId="{{ $company->user_id }}"
+        />
     </x-page-body>
 
 </x-app-layout>
