@@ -8,8 +8,10 @@
     {{ Breadcrumbs::renderCompany($company) }}
 
     <x-page-body>
-        <form action="{{ route('users.companies.store') }}" method="POST">
+        <form action="{{ route('users.companies.update', [$company]) }}" method="POST">
             @csrf
+            @method('PUT')
+
             <x-leading-text-header>
                 {{ __('Create company') }}
 
@@ -29,6 +31,16 @@
                 </div>
                 <div class="w-full md:w-1/2 lg:w-2/3 xl:w-1/2">
                     <x-company.form.location :company="$company"/>
+                    <div>
+                        <x-label class="text-2xl">
+                            {{ __('Gallery') }}
+                        </x-label>
+                        <livewire:file-uploader
+                            source-id="{{ $company->id }}"
+                            source-type="{{ $company->getTable() }}"
+                        />
+                    </div>
+
                 </div>
             </div>
 
