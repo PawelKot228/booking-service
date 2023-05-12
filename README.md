@@ -1,10 +1,14 @@
-
-
 ## Installation
 
 Clone project, navigate to the project directory and configure .env file before starting anything.
 After finishing configuring run following commands to install dependencies, generate key and link storage to public folder
 
+Env additional variables that might be necessary:
+```env
+VITE_GOOGLE_MAPS_KEY="key" #google maps api key necessary for search
+```
+
+Installation commands
 ```shell
 composer install
 npm i
@@ -31,3 +35,8 @@ Compiling front changes can be done by using vite's default npm script:
 ```shell
 npm run dev
 ```
+
+## To do
+* Review index
+* Display company gallery
+* Finish company search query
