@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User\Company;
 
 use App\Enums\AppointmentStatus;
 use App\Enums\EmployeeRole;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\AppointmentChangeStatusRequest;
 use App\Http\Requests\Company\AppointmentStoreRequest;
 use App\Http\Requests\Company\AppointmentUpdateRequest;
@@ -13,7 +14,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 
-class UserCompanyAppointmentController extends Controller
+class AppointmentController extends Controller
 {
     public function __construct(
         private readonly CompanyAppointmentService $appointmentService

@@ -40,7 +40,7 @@
                             <x-button
 {{--                                    data-modal-target="appointmentModal"--}}
 {{--                                    data-modal-toggle="appointmentModal"--}}
-                                    data-url="{{ route('company.service.appointments.available-list', ['company' => $category->company_id, 'service' => $service->id]) }}"
+                                    data-url="{{ route('companies.services.appointments.available-list', ['company' => $category->company_id, 'service' => $service->id]) }}"
                                     x-data
                                     @click="$dispatch('company-appointment-modal')"
                             >

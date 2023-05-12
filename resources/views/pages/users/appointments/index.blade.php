@@ -58,6 +58,23 @@
                             {{ $appointment->from->format('H:i') }} - {{ $appointment->to->format('H:i') }}
                         </x-company.detail-row>
 
+                        @if($appointment->isFinished() && $appointment->review)
+
+                            <x-button-link
+                                class="mt-1 md:mt-3 block"
+                                href="{{ route('users.appointments.reviews.edit', [$appointment, $appointment->review]) }}"
+                            >
+                                {{ __('Edit review') }}
+                            </x-button-link>
+                        @elseif($appointment->isFinished())
+                            <x-button-link
+                                class="mt-1 md:mt-3 block"
+                                href="{{ route('users.appointments.reviews.create', [$appointment]) }}"
+                            >
+                                {{ __('Write a review') }}
+                            </x-button-link>
+                        @endif
+
                         <x-button-link
                             class="mt-1 md:mt-3 block"
                             href="{{ route('users.appointments.show', ['appointment' => $appointment->getKey()]) }}"

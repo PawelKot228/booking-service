@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAppointmentStoreRequest;
 use App\Models\Appointment;
 use App\Models\Service;
@@ -11,7 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class UserAppointmentController extends Controller
+class AppointmentController extends Controller
 {
     public function __construct(private readonly AppointmentService $appointmentService)
     {
@@ -22,7 +23,7 @@ class UserAppointmentController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        $appointments = Appointment::with(['company', 'service', 'employee'])
+        $appointments = Appointment::with(['company', 'service', 'employee', 'review'])
             ->where('user_id', $user->getKey())
             ->paginate(5);
 

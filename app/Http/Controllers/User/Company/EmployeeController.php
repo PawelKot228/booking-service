@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User\Company;
 
 use App\Enums\EmployeeRole;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\EmployeeStoreRequest;
 use App\Http\Requests\Company\EmployeeUpdateRequest;
 use App\Models\Company;
@@ -11,7 +12,7 @@ use App\Services\CompanyEmployeeService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 
-class UserCompanyEmployeeController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct(
         private readonly CompanyEmployeeService $employeeService

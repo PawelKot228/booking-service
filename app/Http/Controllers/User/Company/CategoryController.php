@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User\Company;
 
 use App\Enums\EmployeeRole;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\CategoryRequest;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use App\Services\CompanyCategoryService;
 use Illuminate\Http\RedirectResponse;
 
-class UserCompanyCategoryController extends Controller
+class CategoryController extends Controller
 {
     public function __construct(
         private readonly CompanyCategoryService $categoryService

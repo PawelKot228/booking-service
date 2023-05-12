@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Enums\EmployeeRole;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\StoreRequest;
 use App\Models\Company;
 use App\Models\User;
@@ -10,7 +11,7 @@ use App\Services\CompanyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class UserCompanyController extends Controller
+class CompanyController extends Controller
 {
     public function __construct(
         private readonly CompanyService $companyService

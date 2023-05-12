@@ -17,12 +17,13 @@
                     </p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mt-8">
-                    <img class="w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
-                         alt="office content 1">
-                    <img class="mt-4 w-full lg:mt-10 rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
-                         alt="office content 2">
+                        @foreach($company->covers->take(2) as $cover)
+                            <img class="w-full rounded-lg min-h-[20rem] object-cover {{ $loop->even ? 'mt-4 lg:mt-10' : '' }}"
+                                 src="{{ $cover->url }}"
+                                 alt="cover image"
+                            >
+                        @endforeach
+
                 </div>
             </div>
         </section>
