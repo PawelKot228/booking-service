@@ -55,7 +55,7 @@ class FileUploader extends Component
     {
         $imageService = new ImageService();
         foreach (collect($tmpPath) as $path) {
-            if ($this->limitUpload <= $this->files->count()) {
+            if (($this->limitUpload ?? 100) <= $this->files->count()) {
                 continue;
             }
 

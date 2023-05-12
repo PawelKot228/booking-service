@@ -52,7 +52,9 @@
                     <div class="relative p-2"
                          wire:key="{{ 'file-' . $file->id }}"
                     >
-                        <img src="{{ $file?->url }}" class="w-24 h-24 object-cover rounded-md" alt="image preview">
+                        <img src="{{ $file?->url }}" class="w-24 h-24 object-cover rounded-md bg-gray-500"
+                             alt="image preview"
+                        >
                         <div>
                             @if($file->type === \App\Enums\ImageType::COVER->value)
                                 <p class="absolute bottom-2 left-2 right-2 py-0.5 px-1 font-semibold bg-indigo-400 text-white rounded-md text-sm/[14px]">
@@ -175,7 +177,6 @@
             return {
                 isDropping: false,
                 isUploading: false,
-                selectedType: null,
                 progress: 0,
                 handleFileSelect(event) {
                     if (event.target.files.length) {
@@ -222,7 +223,6 @@
                 saveImageDetails() {
                     @this.
                     saveImageDetails()
-                    this.selectedType = this.$wire.get('selectedImageType')
                     this.$wire.set('displayingFileSettings', false)
 
                 }
