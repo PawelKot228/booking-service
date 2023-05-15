@@ -213,16 +213,14 @@
                     )
                 },
                 removeUpload(id) {
-                    @this.
-                    removeUpload('files', id)
+                    @this.removeUpload('files', id)
                 },
                 openFileDetails(id) {
                     this.$wire.set('displayingFileSettings', true)
                     this.$wire.selectImage(id)
                 },
                 saveImageDetails() {
-                    @this.
-                    saveImageDetails()
+                    @this.saveImageDetails()
                     this.$wire.set('displayingFileSettings', false)
 
                 }
