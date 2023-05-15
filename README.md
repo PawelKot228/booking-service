@@ -23,11 +23,14 @@ Run migration (Application has seeders configured so it is highly recommended to
 php artisan migrate
 ```
 
-Seeders create default user & admin account using following credentials:
+Seeders create default user account using following credentials:
 ```text
 login: text@example.com
 password: password
 ```
+
+### Testing
+Currently there are no tests written except the ones already provided for Fortify/Jetstream components.
 
 ### Developing
 
@@ -39,4 +42,4 @@ npm run dev
 ## To do
 * Review index
 * Display company gallery
-* Finish company search query
+* Finish company search query + pagination
