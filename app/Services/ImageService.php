@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 
 class ImageService
 {
-    public function store(UploadedFile $file, Model $model, string $type = 'default')
+    public function store(UploadedFile $file, Model $model, string $type = 'default'): ?Image
     {
         return $this->storeImage($file, $model->getTable(), $model->getKey(), $type);
     }
@@ -18,7 +18,7 @@ class ImageService
         string $table,
         int|string $id,
         string $type = 'default'
-    ) {
+    ): ?Image {
         $path = \Storage::disk('public')->putFile("$table/$id", $file);
 
         if (!$path) {
