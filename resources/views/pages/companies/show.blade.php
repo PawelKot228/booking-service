@@ -32,9 +32,8 @@
             {{ __('Services') }}
         </x-company.categories-section>
 
-        <x-company.comments-section :company="$company">
-            {{ __('Comments') }}
-        </x-company.comments-section>
+        <livewire:company.reviews-section company-id="{{ $company->id }}" />
+
     </x-page-body>
 
 

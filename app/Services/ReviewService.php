@@ -4,11 +4,19 @@ namespace App\Services;
 
 use App\Models\Appointment;
 use App\Models\Review;
+use Illuminate\Database\Eloquent\Builder;
+use \Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ReviewService
 {
+    public function companyReviewsQuery(Builder $query): Builder|QueryBuilder
+    {
+        return $query->orderByDesc('created_at');
+    }
+
+
     /**
      * @throws ModelNotFoundException
      */
