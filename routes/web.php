@@ -62,14 +62,14 @@ Route::resource('companies', CompanyController::class)
 Route::prefix('/companies/{company}')
     ->name('companies.')
     ->group(function () {
-        Route::resource('reviews', ReviewController::class);
-
-        Route::resource('services.appointments', AppointmentController::class);
         Route::prefix('services/{service}/appointments')
             ->name('services.appointments.')
             ->group(function () {
                 Route::get('/available', [AppointmentController::class, 'availableList'])->name('available-list');
             });
+
+        Route::resource('reviews', ReviewController::class);
+        Route::resource('services.appointments', AppointmentController::class);
     });
 
 

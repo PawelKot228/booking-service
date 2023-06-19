@@ -276,7 +276,7 @@
                                 this.modal.hide();
 
                                 this.$dispatch('notification', {
-                                    type: 'error',
+                                    type: 'success',
                                     text: '{{ __('Appointment has been successfully created!') }}'
                                 })
                             })

@@ -21,12 +21,13 @@ class AppointmentController extends Controller
         $service = Service::with([
             'company',
             'appointments' => fn(HasMany $query) => $query->where(
-                fn(Builder $query) => $query->whereDate('from', '>=', $date->startOfDay())
+                fn(Builder $query) => $query
+                    ->whereDate('from', '>=', $date->startOfDay())
                     ->whereDate('to', '<=', $date->endOfDay())
             ),
         ])
-            ->has('company')
-            ->findOrFail($service);
+        ->has('company')
+        ->findOrFail($service);
 
         return response()->json((new ScheduleAppointmentResource($service)));
     }
