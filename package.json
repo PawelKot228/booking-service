@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.15.1",
+        "@popperjs/core": "^2.11.8",
         "boxicons": "^2.1.4",
         "daisyui": "^2.51.5",
         "dayjs": "^1.11.7"
