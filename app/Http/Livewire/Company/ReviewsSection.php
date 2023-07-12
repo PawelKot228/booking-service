@@ -17,7 +17,8 @@ class ReviewsSection extends Component
     public function render(ReviewService $reviewService)
     {
         $reviews = $reviewService->companyReviewsQuery(
-            Review::with(['user', 'appointment'])
+            query: Review::with(['user', 'appointment']),
+            companyId: $this->companyId,
         );
 
         $reviews = $reviews->paginate(5);

@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 
 class ReviewService
 {
-    public function companyReviewsQuery(Builder $query): Builder|QueryBuilder
+    public function companyReviewsQuery(Builder $query, int $companyId): Builder|QueryBuilder
     {
-        return $query->orderByDesc('created_at');
+        return $query
+            ->where('company_id', $companyId)
+            ->orderByDesc('created_at');
     }
 
 
