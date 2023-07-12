@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CompanyCategorySeeder::class,
             ServiceSeeder::class,
-            //AppointmentSeeder::class,
-            //ReviewSeeder::class,
+            AppointmentSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }
