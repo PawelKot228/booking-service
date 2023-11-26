@@ -6,8 +6,8 @@
     </x-slot>
 
     <x-page-body>
-        <div class="flex flex-wrap lg:flex-nowrap gap-y-2 items-center p-2">
-            <div class="w-full sm:w-1/2 px-2">
+        <div class="flex flex-wrap gap-y-2 items-center py-2 items-end">
+            <div class="w-full sm:w-1/2 py-2">
                 <label for="search-place-input" class="sr-only">{{ __('Search') }}</label>
                 <div class="relative w-full">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -32,21 +32,23 @@
                 <x-service.category-filter/>
             </div>
 
-            <div class="w-full lg:w-1/4 px-2">
-                <x-button class="w-full" id="searchCompanyButton"
-                          x-data
-                          x-on:click="window.dispatchEvent(new CustomEvent('company-list-refresh'))"
-                >
-                    {{ __('Apply') }}
-                </x-button>
-
+            <div class="w-full sm:w-1/2 lg:w-1/4 px-2">
+                <x-service.sort-dropdown />
             </div>
 
+            <x-button class="w-full" id="searchCompanyButton"
+                      x-data
+                      x-on:click="Livewire.emit('companyListRefresh', Alpine.store('companySearchForm') ?? {})"
+            >
+                {{ __('Apply') }}
+            </x-button>
         </div>
 
         <hr>
 
-        <x-company.list/>
+        <livewire:company.search-list>
+
+        </livewire:company.search-list>
     </x-page-body>
 
 

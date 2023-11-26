@@ -84,4 +84,9 @@ class Company extends Model
     {
         return $this->images()->where('type', ImageType::DEFAULT->value);
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

@@ -17,13 +17,12 @@
                     </p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mt-8">
-                        @foreach($company->covers->take(2) as $cover)
-                            <img class="w-full rounded-lg min-h-[20rem] object-cover {{ $loop->even ? 'mt-4 lg:mt-10' : '' }}"
-                                 src="{{ $cover->url }}"
-                                 alt="cover image"
-                            >
-                        @endforeach
-
+                    @foreach($company->covers->take(2) as $cover)
+                        <img class="w-full rounded-lg min-h-[20rem] object-cover {{ $loop->even ? 'mt-4 lg:mt-10' : '' }}"
+                             src="{{ $cover->url }}"
+                             alt="cover image"
+                        >
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -36,11 +35,12 @@
 
     </x-page-body>
 
-
-    @push('modals')
-        <x-appointment.create-modal :company="$company">
-            {{ __('Make an appointment') }}
-        </x-appointment.create-modal>
-    @endpush
+    @auth
+        @push('modals')
+            <x-appointment.create-modal :company="$company">
+                {{ __('Make an appointment') }}
+            </x-appointment.create-modal>
+        @endpush
+    @endauth
 
 </x-app-layout>

@@ -34,14 +34,29 @@ if (googleMapsPlaceInput) {
                 googleMapsPlaceInput.dataset.lat = place.geometry.location.lat();
                 googleMapsPlaceInput.dataset.lng = place.geometry.location.lng();
 
-                let store = Alpine.store('companySearchForm')
+                let store = Alpine.store('companySearchForm') ?? {};
 
-                store.place_id = place.place_id
+                store.place_id = place?.place_id
                 store.lat = place.geometry.location.lat()
                 store.lng = place.geometry.location.lng()
 
                 Alpine.store('companySearchForm', store)
+
+                let select = document.querySelector('#sortBySelect option[value="distance"]');
+                select.disabled = false;
             });
         });
 }
 
+
+function fireLivewireCompanySearch() {
+    let store = Alpine.store('companySearchForm') ?? {};
+
+    let selectSort = document.getElementById('sortBySelect');
+
+    store.sortBy = selectSort.value;
+
+    console.log(selectSort.value)
+
+    Livewire.emit('companyListRefresh', Alpine.store('companySearchForm') ?? {})
+}

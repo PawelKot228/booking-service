@@ -3,46 +3,55 @@
 namespace App\Services;
 
 use App\Enums\EmployeeRole;
-use App\Http\Requests\Company\SearchRequest;
 use App\Models\Company;
 use App\Models\User;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\JoinClause;
+use Illuminate\Http\Request;
 
 class CompanyService
 {
-    public function listQuery(Builder $query, SearchRequest $request): Builder
+    public function listQuery(Builder $query, Request $request): Builder
     {
-        $query->select([
-            'companies.*',
-            DB::raw('AVG(reviews.rating) as reviews_avg_rating'),
-            DB::raw('COUNT(reviews.rating) as reviews_count'),
-        ]);
+        $lat = $request->get('lat');
+        $lng = $request->get('lng');
 
-        $query->join(
-            'company_categories',
-            function (JoinClause $clause) use ($request) {
-                $clause->on('companies.id', '=', 'company_categories.company_id');
-                $clause->where(function (JoinClause $query) use ($request) {
-                    if ($request->categoryNames) {
-                        $query->orWhereIn('company_categories.category', $request->categoryNames);
-                    }
-                    if ($request->subcategoryNames) {
-                        $query->orWhereIn('company_categories.subcategory', $request->subcategoryNames);
-                    }
-                });
-            }
-        );
+        if ($lat !== null && $lng !== null) {
+            $coordinatesQuery = "( 6371 * acos( cos( radians($lat) ) * cos( radians( latitude ) )"
+                . "* cos( radians( longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( latitude ) ) ) )";
 
+            $query->select([
+                '*',
+                DB::raw("ROUND($coordinatesQuery, 2) AS distance"),
+            ]);
+        }
 
-        $query->leftJoin('reviews', function (JoinClause $clause) {
-            $clause->on('reviews.company_id', '=', 'companies.id');
-        });
+        $categories = $request->get('categories');
+        if (!empty($categories) && is_array($categories)) {
+            $categories = implode(', ', array_map(fn($value) => "'$value'", $categories));
+            $query->whereRaw("id IN (SELECT company_id FROM company_categories WHERE category IN ($categories))");
+        }
 
-        return $query
-            ->groupBy('companies.id')
-            ->limit(20);
+        $subcategories = $request->get('subcategories');
+        if (!empty($subcategories) && is_array($subcategories)) {
+            $subcategories = implode(', ', array_map(fn($value) => "'$value'", $subcategories));
+            $query->whereRaw("id IN (SELECT company_id FROM company_categories WHERE subcategory IN ($subcategories))");
+        }
+
+        $query->withCount('reviews');
+        $query->withAvg('reviews', 'rating');
+
+        $orderBy = $request->get('orderBy');
+
+        if ($orderBy === 'distance' && $lat !== null && $lng !== null) {
+            $query->orderBy('distance');
+        } elseif ($orderBy === 'best') {
+            $query->orderBy('reviews_avg_rating');
+        } elseif ($orderBy === 'most_reviews') {
+            $query->orderBy('reviews_count');
+        }
+
+        return $query;
     }
 
     /**
