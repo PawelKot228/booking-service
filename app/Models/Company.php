@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Company extends Model
 {
@@ -77,12 +79,21 @@ class Company extends Model
 
     public function covers(): MorphMany
     {
-        return $this->images()->where('type', ImageType::COVER->value);
+        return $this->images()
+            ->where('type', ImageType::COVER->value);
+    }
+
+    public function cover(): MorphOne
+    {
+        return $this->images()
+            ->one()
+            ->where('type', ImageType::COVER->value);
     }
 
     public function gallery(): MorphMany
     {
-        return $this->images()->where('type', ImageType::DEFAULT->value);
+        return $this->images()
+            ->where('type', ImageType::DEFAULT->value);
     }
 
     public function reviews(): HasMany
