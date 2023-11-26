@@ -12,7 +12,7 @@ class CompanyController extends Controller
 {
     public function index(SearchRequest $request, CompanyService $companyService): AnonymousResourceCollection
     {
-        $companies = $companyService->listQuery(Company::with(['categories']), $request)->get();
+        $companies = $companyService->listQuery(Company::with(['categories', 'cover']), $request)->get();
 
         return CompanyResource::collection($companies);
     }

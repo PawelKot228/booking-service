@@ -11,7 +11,7 @@ class FeaturedList extends Component
 {
     public function render(CompanyService $companyService)
     {
-        $companies = $companyService->listQuery(Company::with(['categories']), new Request(['orderBy' => 'best']));
+        $companies = $companyService->listQuery(Company::with(['categories', 'cover']), new Request(['orderBy' => 'best']));
 
         $companies = $companies
             ->limit(8)

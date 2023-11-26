@@ -36,7 +36,7 @@ class SearchList extends Component
             'orderBy' => $this->sortBy,
         ]);
 
-        $companies = $companyService->listQuery(Company::with(['categories']), $request);
+        $companies = $companyService->listQuery(Company::with(['categories', 'cover']), $request);
 
         $companies = $companies->paginate(5);
 
