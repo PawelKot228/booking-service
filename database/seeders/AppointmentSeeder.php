@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Appointment;
 use App\Models\Company;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -37,7 +38,7 @@ class AppointmentSeeder extends Seeder
             }
         }
 
-        foreach (array_chunk($appointments, 50) as $appointmentsChunk) {
+        foreach (array_chunk($appointments, 500) as $appointmentsChunk) {
             Appointment::insert($appointmentsChunk);
         }
     }

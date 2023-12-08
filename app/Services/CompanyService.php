@@ -46,9 +46,9 @@ class CompanyService
         if ($orderBy === 'distance' && $lat !== null && $lng !== null) {
             $query->orderBy('distance');
         } elseif ($orderBy === 'best') {
-            $query->orderBy('reviews_avg_rating');
+            $query->orderByDesc('reviews_avg_rating');
         } elseif ($orderBy === 'most_reviews') {
-            $query->orderBy('reviews_count');
+            $query->orderByDesc('reviews_count');
         }
 
         return $query;
