@@ -77,4 +77,26 @@ class CompanyService
         return $company;
     }
 
+
+    /**
+     * @throws \Throwable
+     */
+    public function update(Company $company, array $fill): ?Company
+    {
+        \DB::beginTransaction();
+        try {
+            $company->fill($fill)->save();
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            logError($exception);
+            flashErrorNotification(__('Unexpected error occurred'));
+
+            return null;
+        }
+
+        return $company;
+    }
 }

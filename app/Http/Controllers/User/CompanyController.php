@@ -58,8 +58,21 @@ class CompanyController extends Controller
         return view('pages.users.companies.edit', compact('company'));
     }
 
-    public function update(Request $request, Company $company)
+    public function update(StoreRequest $request, Company $company)
     {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $company = $this->companyService->update($company, $request->validated());
+
+        if (!$company) {
+            flashErrorNotification(__('Unexpected error occurred'));
+            return redirect()->back();
+        }
+
+        flashSuccessNotification(__('Successfully created a company!'));
+
+        return to_route('users.companies.edit', ['company' => $company->getKey()]);
     }
 
     public function destroy(Company $company)
