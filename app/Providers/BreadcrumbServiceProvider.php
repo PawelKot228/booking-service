@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Appointment;
 use App\Models\CompanyCategory;
+use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +32,9 @@ class BreadcrumbServiceProvider extends ServiceProvider
                 $name = (string)str($model->getTable())->singular();
                 if ($model instanceof CompanyCategory) {
                     $name = 'category';
+                }
+                if ($model instanceof User) {
+                    $name = 'employee';
                 }
 
                 $params[$name] = $model->getKey();
